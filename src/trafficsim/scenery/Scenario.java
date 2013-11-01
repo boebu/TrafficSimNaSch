@@ -1,5 +1,7 @@
 package trafficsim.scenery;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: boebu
@@ -9,7 +11,7 @@ package trafficsim.scenery;
  */
 public interface Scenario {
 
-    public Lane[] getLanes();
+    public ArrayList<Lane> getLanes();
 
     public void addLane(Lane lane);
 

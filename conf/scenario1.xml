@@ -1,0 +1,5 @@
+<scenario id="1" name="One Lane Default Scenario">
+    <lane id="0">
+        <cells>1500</cells>
+    </lane>
+</scenario>

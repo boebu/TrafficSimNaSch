@@ -1,5 +1,7 @@
 package trafficsim.scenery;
 
+import trafficsim.simulator.Vehicle;
+
 /**
  * Created with IntelliJ IDEA.
  * User: boebu
@@ -9,12 +11,12 @@ package trafficsim.scenery;
  */
 public interface Cell {
 
+
+    public boolean isEmpty();
+
+    public void setVehicle(Vehicle vehicle);
+
+    public void removeVehicle();
+
     public boolean hasVehicle();
-
-    public Vehicle getVehicle();
-
-    public boolean hasNext();
-
-    public Cell getNext();
-
 }

@@ -1,4 +1,6 @@
-package trafficsim.scenery;
+package trafficsim.simulator;
+
+import trafficsim.scenery.Cell;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,8 +16,6 @@ public interface Vehicle {
     public void setSpeed();
 
     public Cell getCell();
-
-    public void setCell(Cell cell);
 
 
 }
