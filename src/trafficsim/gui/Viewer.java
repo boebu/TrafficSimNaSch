@@ -16,8 +16,9 @@ import java.awt.event.ActionListener;
 
 public class Viewer
 {
-    public static void main(String[] args) throws InterruptedException
-    {
+
+    public static void initialize(){
+
         //Set Cells for Simulator
         final int SIM_WIDTH = 60;
         final int SIM_HEIGHT = 60;
@@ -133,11 +134,11 @@ public class Viewer
         simFrame.setVisible(true);
         conFrame.setVisible(true);
 
-        while (true) {
+        /*while (true) {
             Thread.sleep(DELAY);
             //game.nextGeneration();
             //component.repaint();
-        }
+        }*/
     }
 
 }
