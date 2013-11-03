@@ -7,6 +7,8 @@ package trafficsim.gui;
  * Time: 14:16
  */
 
+import sun.java2d.loops.DrawRect;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -14,56 +16,41 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Viewer
-{
+public class Viewer {
 
-    public static void initialize(){
+    private static final Dimension SIM_PANEL_SIZE = new Dimension(900, 900);
+    private static final Dimension CON_PANEL_SIZE = new Dimension(300, 300);
 
-        //Set Cells for Simulator
-        final int SIM_WIDTH = 60;
-        final int SIM_HEIGHT = 60;
+    public static void createUI() {
+        DrawRectPanel drawRectPanel = new DrawRectPanel();
+        createSimFrame(drawRectPanel);
+        createConFrame(drawRectPanel);
+    }
 
-        //Set Cell Size
-        final int SIM_CELL_SIZE = 15;
+    private static void createSimFrame(final DrawRectPanel drawRectPanel) {
+        drawRectPanel.setPreferredSize(SIM_PANEL_SIZE);
 
-        //Set Simulator Frame Width & Height (+ windows header 23px)
-        final int SIM_FRAME_WIDTH = SIM_WIDTH * SIM_CELL_SIZE;
-        final int SIM_FRAME_HEIGHT = SIM_HEIGHT * SIM_CELL_SIZE + 23;
+        /*final DrawPanelController gppController =
+                new DrawPanelController(drawRectPanel);*/
 
-        //Set Controller Frame Width & Height (+ windows header 23px)
-        final int CON_FRAME_WIDTH = 300;
-        final int CON_FRAME_HEIGHT = 300 + 23;
-
-        final int DELAY = 100;
-
-        /*
-         * SIMULATOR FRAME
-         */
-
-        JFrame simFrame = new JFrame();
-        GridLayout simLayout = new GridLayout(SIM_WIDTH, SIM_HEIGHT);
-
-        //Set Parameters to Simulator Window
-        simFrame.setSize(SIM_FRAME_WIDTH, SIM_FRAME_HEIGHT);
-        simFrame.setTitle("Traffic Simulator");
+        JFrame simFrame = new JFrame("Traffic Simulator");
+        simFrame.getContentPane().add(drawRectPanel, BorderLayout.CENTER);
+        //simFrame.getContentPane().add(gppController, BorderLayout.SOUTH);
         simFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        simFrame.pack();
         simFrame.setLocation(0, 0);
-        simFrame.setLayout(simLayout);
+        simFrame.setVisible(true);
+    }
 
-
-        /*
-         * CONTROLLER FRAME
-         */
-
-        JFrame conFrame = new JFrame();
+    private static void createConFrame(final DrawRectPanel drawRectPanel) {
+        JFrame conFrame = new JFrame("Traffic Simulator Control");
+        conFrame.setSize(CON_PANEL_SIZE);
         GridLayout conLayout = new GridLayout(0,1);
 
-        //Set Parameters to Controller Window
-        conFrame.setSize(CON_FRAME_WIDTH, CON_FRAME_HEIGHT);
-        conFrame.setTitle("Traffic Simulator Control");
         conFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        conFrame.setLocation(SIM_FRAME_WIDTH, 0);
+        conFrame.setLocation(SIM_PANEL_SIZE.width, 0);
         conFrame.setLayout(conLayout);
+        conFrame.setVisible(true);
 
         /*
          * BUTTONs
@@ -90,6 +77,7 @@ public class Viewer
             @Override
             public void actionPerformed(ActionEvent e) {
                 playButton.setText("Play");
+                repaint(drawRectPanel);
             }
         });
 
@@ -127,18 +115,72 @@ public class Viewer
             }
         });
 
-        /*
-         * SHOW FRAMEs
-         */
-
-        simFrame.setVisible(true);
-        conFrame.setVisible(true);
-
-        /*while (true) {
-            Thread.sleep(DELAY);
-            //game.nextGeneration();
-            //component.repaint();
-        }*/
     }
 
+    public static void repaint(DrawRectPanel drawPanel) {
+        drawPanel.setCellColor(Color.RED);
+        drawPanel.repaint();
+    }
+
+
+    static class DrawRectPanel extends JPanel {
+        private int cells = 60;
+        private int lanes = 2;
+        private Color cellColor = Color.black;
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(cellColor);
+            for (int i = 0; i < cells; i++) {
+                for (int j = 0; j < lanes; j++) {
+                    g.drawRect(i * 15, j * 15, 15, 15);
+                }
+            }
+        }
+
+        public void setCells(int cells) {
+            this.cells = cells;
+        }
+
+        public void setLanes(int lanes) {
+            this.lanes = lanes;
+        }
+
+        public void setCellColor(Color cellColor) {
+            this.cellColor = cellColor;
+        }
+    }
+
+    /*static class DrawPanelController extends JPanel {
+        private DrawRectPanel drPanel;
+        private JSlider widthSlider = new JSlider(0, 60, 60);
+        private JSlider heightSlider = new JSlider(0, 60, 60);
+
+        public DrawPanelController(DrawRectPanel drPanel) {
+            this.drPanel = drPanel;
+
+            setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+            add(new JLabel("Width"));
+            add(widthSlider);
+            add(new JLabel("Height"));
+            add(heightSlider);
+
+            SliderListener sliderListener = new SliderListener();
+            widthSlider.addChangeListener(sliderListener);
+            heightSlider.addChangeListener(sliderListener);
+        }
+
+        private class SliderListener implements ChangeListener {
+            public void stateChanged(ChangeEvent e) {
+                JSlider slider = (JSlider) e.getSource();
+                if (slider == widthSlider) {
+                    drPanel.setCells(slider.getValue());
+                } else {
+                    drPanel.setLanes(slider.getValue());
+                }
+                drPanel.repaint();
+            }
+        }
+    }*/
 }

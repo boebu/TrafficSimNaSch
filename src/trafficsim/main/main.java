@@ -14,10 +14,10 @@ public class main {
 
     public static void main(String[] args) throws InterruptedException
     {
-      Viewer view = new Viewer();
-      Simulator sim = new Simulator();
+        Viewer view = new Viewer();
+        Simulator sim = new Simulator();
 
-      Viewer.initialize();
+        view.createUI();
 
     }
 
