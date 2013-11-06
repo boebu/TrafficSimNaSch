@@ -1,6 +1,7 @@
 package trafficsim.scenery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,9 +17,12 @@ public class LaneImpl implements Lane{
 
     public LaneImpl(int length) {
         this.nrofcells = (int) (length / CellImpl.LENGTH);
-
-        for(int i=0;i<this.nrofcells;i++) {
+        for(int i=0;i<nrofcells;i++)  {
             cells.add(i,new CellImpl());
+            if (i>0) {
+                cells.get(i-1).setNext(cells.get(i));
+            }
+
         }
     }
 
@@ -44,5 +48,9 @@ public class LaneImpl implements Lane{
         }  else {
             return true;
         }
+    }
+
+    public ArrayList<Cell> getCells() {
+       return cells;
     }
 }

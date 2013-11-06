@@ -1,5 +1,7 @@
 package trafficsim.scenery;
 
+import java.util.ArrayList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: boebu
@@ -16,5 +18,7 @@ public interface Lane {
     public Cell getLastCell();
 
     public boolean hasCell(Cell c);
+
+    public ArrayList<Cell> getCells();
 
 }

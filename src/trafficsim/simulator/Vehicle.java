@@ -17,5 +17,9 @@ public interface Vehicle {
 
     public Cell getCell();
 
+    public Driver getDriver();
+
+    public void move(Cell c);
+
 
 }

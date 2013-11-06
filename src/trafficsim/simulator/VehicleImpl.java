@@ -13,7 +13,23 @@ import trafficsim.scenery.Cell;
 public class VehicleImpl implements Vehicle {
 
     Cell current;
+    Driver driver;
 
+    public VehicleImpl(Cell current) {
+        this.current = current;
+        this.current.setVehicle(this);
+        this.driver = new DriverImplDefault();
+        this.driver.setVehicle(this);
+
+    }
+
+    public VehicleImpl(Cell current, Driver driver) {
+        this.current = current;
+        this.current.setVehicle(this);
+        this.driver = driver;
+        this.driver.setVehicle(this);
+
+    }
 
     @Override
     public int getSpeed() {
@@ -26,7 +42,18 @@ public class VehicleImpl implements Vehicle {
     }
 
     @Override
+    public Driver getDriver() {
+        return driver;
+    }
+
+    @Override
     public Cell getCell() {
         return current;
+    }
+    @Override
+    public void move(Cell c) {
+        this.current.removeVehicle();
+        this.current = c;
+        this.current.setVehicle(this);
     }
 }

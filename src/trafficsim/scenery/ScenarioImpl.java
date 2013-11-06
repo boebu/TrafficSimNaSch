@@ -11,13 +11,26 @@ import java.util.ArrayList;
  */
 public class ScenarioImpl implements Scenario {
 
-    ArrayList<Lane> lanes;
+    ArrayList<Lane> lanes = new ArrayList<Lane>();
     String name;
     int id;
 
-    public ScenarioImpl(String name, int id) {
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public ScenarioImpl(String name, int id, int nroflanes,int lanelength) {
         this.name = name;
         this.id = id;
+        for(int i=0;i<nroflanes;i++) {
+            lanes.add(i,new LaneImpl(lanelength));
+        }
     }
 
     @Override

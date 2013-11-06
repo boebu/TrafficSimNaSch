@@ -17,4 +17,8 @@ public interface Scenario {
 
     public Lane getLane(int index);
 
+    public String getName();
+
+    public int getId();
+
 }

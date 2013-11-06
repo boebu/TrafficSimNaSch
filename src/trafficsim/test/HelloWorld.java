@@ -1,12 +1,10 @@
 package trafficsim.test;
 
-import trafficsim.scenery.Cell;
-import trafficsim.scenery.CellImpl;
-import trafficsim.scenery.Lane;
-import trafficsim.scenery.LaneImpl;
-import trafficsim.simulator.VehicleImpl;
+import trafficsim.scenery.*;
+import trafficsim.simulator.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 /**
@@ -18,18 +16,41 @@ import java.util.ListIterator;
  */
 public class HelloWorld {
     public static void main(String[] args) {
-        Lane lane = new LaneImpl(1500);
 
-        lane.getFirstCell().setVehicle(new VehicleImpl());
+        Scenario sc = new ScenarioImpl("Scenario 1",1,1,1500);
 
-        Cell c1 = new CellImpl();
 
-        System.out.println(lane.countCells());
-        System.out.println(lane.getFirstCell().hasVehicle());
-        lane.getFirstCell().removeVehicle();
-        System.out.println(lane.getFirstCell().hasVehicle());
-        System.out.println(lane.hasCell(c1));
+        for(Lane lane:sc.getLanes()) {
+            for(Cell cell:lane.getCells()) {
+                //System.out.println(cell + " -> " + cell.next());
+            }
+        }
+        System.out.println(sc.getLane(0).getCells().get(0))  ;
+        Vehicle v1 = new VehicleImpl(sc.getLane(0).getFirstCell());
+        System.out.println(v1.getCell().isEmpty());
+        System.out.println(v1.getCell().next().isEmpty())    ;
 
+        Cell c = v1.getCell();
+        int i = 0;
+        sc.getLane(0).getCells().get(3).setVehicle(new VehicleImpl(sc.getLane(0).getCells().get(3)));
+        while(c.hasNext() && i < 5) {
+
+            System.out.println(c + " " + c.isEmpty())   ;
+            c = c.next();
+            i++;
+
+
+        }
+
+        v1.getDriver().drive();
+
+        System.out.println(v1.getCell());
+
+
+        System.out.println(sc.getLane(0).getCells().get(2).hasVehicle());
+        System.out.println(sc.getLane(0).getCells().get(3).hasVehicle()
+
+        );
 
     }
 

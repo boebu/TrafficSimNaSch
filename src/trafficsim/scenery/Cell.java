@@ -16,7 +16,27 @@ public interface Cell {
 
     public void setVehicle(Vehicle vehicle);
 
+    public Vehicle getVehicle();
+
     public void removeVehicle();
 
     public boolean hasVehicle();
+
+    public void setNext(Cell c);
+
+    public boolean hasNext();
+
+    public Cell next();
+
+    public void setRight(Cell c);
+
+    public boolean hasRight();
+
+    public Cell right();
+
+    public void setLeft(Cell c);
+
+    public boolean hasLeft();
+
+    public Cell left();
 }
