@@ -7,8 +7,6 @@ package trafficsim.gui;
  * Time: 14:16
  */
 
-import sun.java2d.loops.DrawRect;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
