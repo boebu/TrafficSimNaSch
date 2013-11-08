@@ -46,8 +46,6 @@ public class SimulatorController {
         conFrame.add(playButton);
         conFrame.add(stopButton);
 
-        conFrame.setVisible(true);
-
         playButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,6 +104,8 @@ public class SimulatorController {
                 setDawdle(dawdleSlider.getValue());
             }
         });
+
+        conFrame.setVisible(true);
 
     }
 

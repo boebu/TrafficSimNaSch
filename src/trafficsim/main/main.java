@@ -41,7 +41,11 @@ public class main {
         view.create(panl);
 
         Vehicle v1 = new VehicleImpl(scen.getLane(0).getFirstCell());
+        v1.setSpeed();
         Vehicle v2 = new VehicleImpl(scen.getLane(1).getFirstCell());
+        v2.setSpeed();
+        Vehicle v3 = new VehicleImpl(scen.getLane(2).getFirstCell());
+        v3.setSpeed();
 
         while (true) {
 
@@ -50,14 +54,18 @@ public class main {
             if (cont.getStatus() == cont.STATUS_PLAY) {
 
                 test = test + 5;
+
                 if (test >= CELLS) {
                     test = 0;
                 }
-                v1.move(scen.getLane(0).getCells().get(test));
-                v2.move(scen.getLane(1).getCells().get(test/2));
 
-                panl.repaint();
+                v1.move(scen.getLane(0).getCells().get(test));
+                v2.move(scen.getLane(1).getCells().get(test/5*4));
+                v3.move(scen.getLane(2).getCells().get(test/5*3));
+
             }
+
+            panl.repaint();
         }
     }
 
