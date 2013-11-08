@@ -15,7 +15,7 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class SimulatorPanel extends JPanel {
-    private final int CELL_SIZE = 12;
+    private final int CELL_SIZE = 4;
     private Scenario scen;
 
     @Override

@@ -5,9 +5,6 @@ import trafficsim.gui.SimulatorController;
 import trafficsim.gui.SimulatorView;
 import trafficsim.scenery.Scenario;
 import trafficsim.scenery.ScenarioImpl;
-import trafficsim.simulator.Vehicle;
-import trafficsim.simulator.VehicleImpl;
-
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +13,7 @@ import trafficsim.simulator.VehicleImpl;
  * Time: 17:15
  * To change this template use File | Settings | File Templates.
  */
-public class main {
+public class Main {
 
     public static void main(String[] args) throws InterruptedException
     {
@@ -40,13 +37,6 @@ public class main {
         cont.create();
         view.create(panl);
 
-        Vehicle v1 = new VehicleImpl(scen.getLane(0).getFirstCell());
-        v1.setSpeed();
-        Vehicle v2 = new VehicleImpl(scen.getLane(1).getFirstCell());
-        v2.setSpeed();
-        Vehicle v3 = new VehicleImpl(scen.getLane(2).getFirstCell());
-        v3.setSpeed();
-
         while (true) {
 
             Thread.sleep(DELAY);
@@ -58,11 +48,6 @@ public class main {
                 if (test >= CELLS) {
                     test = 0;
                 }
-
-                v1.move(scen.getLane(0).getCells().get(test));
-                v2.move(scen.getLane(1).getCells().get(test/5*4));
-                v3.move(scen.getLane(2).getCells().get(test/5*3));
-
             }
 
             panl.repaint();
