@@ -28,6 +28,12 @@ public interface Cell {
 
     public Cell next();
 
+    public void setPrevious(Cell c);
+
+    public boolean hasPrevious();
+
+    public Cell previous();
+
     public void setRight(Cell c);
 
     public boolean hasRight();

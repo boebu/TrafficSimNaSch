@@ -13,7 +13,11 @@ public interface Vehicle {
 
     public int getSpeed();
 
-    public void setSpeed();
+    public int getMaxSpeed();
+
+    public void accelerate();
+
+    public void decelerate(int s);
 
     public Cell getCell();
 

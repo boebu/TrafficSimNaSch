@@ -48,9 +48,9 @@ public class HelloWorld {
 
 
         System.out.println(sc.getLane(0).getCells().get(2).hasVehicle());
-        System.out.println(sc.getLane(0).getCells().get(3).hasVehicle()
+        System.out.println(sc.getLane(0).getCells().get(3).hasVehicle() );
 
-        );
+        System.out.println(Math.random()<0.15);
 
     }
 

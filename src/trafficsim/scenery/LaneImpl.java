@@ -21,6 +21,7 @@ public class LaneImpl implements Lane{
             cells.add(i,new CellImpl());
             if (i>0) {
                 cells.get(i-1).setNext(cells.get(i));
+                cells.get(i).setPrevious(cells.get(i-1));
             }
 
         }

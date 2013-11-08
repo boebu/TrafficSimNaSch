@@ -12,7 +12,7 @@ import trafficsim.scenery.Scenario;
  */
 public class DriverImplDefault implements Driver {
 
-    Vehicle vehicle;
+    private Vehicle vehicle;
 
     @Override
     public Vehicle getVehicle() {
@@ -24,16 +24,18 @@ public class DriverImplDefault implements Driver {
         this.vehicle = v;
     }
 
-    Scenario scenario;
     @Override
-    public void drive() {
-        vehicle.getCell();
+    public void drive()  {
 
+        // accelerate if speed < maxspeed (1)
+        vehicle.accelerate();
+
+        // break down to free cells left in front (2)
+        vehicle.getCell();
         Cell c = vehicle.getCell();
-        Cell first = c;
         int i = 0;
 
-        while(c.hasNext() && i < 5) {
+        while(c.hasNext() && i < vehicle.getSpeed()) {
 
             if(!c.next().isEmpty()) {
                break;
@@ -42,13 +44,20 @@ public class DriverImplDefault implements Driver {
                i++;
             }
 
-
         }
-        System.out.println(i);
-        vehicle.move(c);
+        vehicle.decelerate(i);
+
+        // need a troedel variable
+        double p = 0.15;
+        // trödeln  (3)
+        if(Math.random()<p) {
+            vehicle.decelerate(i-1);
+            vehicle.move(c.previous());
+        }  else {
+            vehicle.move(c);
+        }
 
 
 
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

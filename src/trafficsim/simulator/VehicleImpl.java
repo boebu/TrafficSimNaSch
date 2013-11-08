@@ -12,8 +12,17 @@ import trafficsim.scenery.Cell;
  */
 public class VehicleImpl implements Vehicle {
 
+    // define size of a Cell in [m]
+    public static int MAXSPEED = 5;
+
+    @Override
+    public int getMaxSpeed() {
+        return MAXSPEED;
+    }
+
     Cell current;
     Driver driver;
+    int speed = 0;
 
     public VehicleImpl(Cell current) {
         this.current = current;
@@ -33,12 +42,19 @@ public class VehicleImpl implements Vehicle {
 
     @Override
     public int getSpeed() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return speed;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void setSpeed() {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void decelerate(int s) {
+        this.speed = s;
+    }
+
+    @Override
+    public void accelerate() {
+        if(speed < MAXSPEED) {
+            speed++;
+        }
     }
 
     @Override

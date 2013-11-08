@@ -13,11 +13,33 @@ public class CellImpl implements Cell {
 
     Vehicle vehicle;
     Cell next;
+    Cell previous;
     Cell right;
     Cell left;
 
+
     // define size of a Cell in [m]
     static double LENGTH = 7.5;
+
+
+    @Override
+    public void setPrevious(Cell c) {
+        this.previous = c;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        if (previous == null) {
+            return false;
+        }  else {
+            return true;
+        }
+    }
+
+    @Override
+    public Cell previous() {
+        return previous;
+    }
 
     @Override
     public void setVehicle(Vehicle vehicle) {
