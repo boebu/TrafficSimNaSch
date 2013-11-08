@@ -18,9 +18,9 @@ public class SimulatorController {
 
     //Windows Size
     private final Dimension PANEL_SIZE = new Dimension(300, 300);
-    private final int STATUS_STOP = 0;
-    private final int STATUS_PLAY = 1;
-    private final int STATUS_PAUSE = 2;
+    public final int STATUS_STOP = 0;
+    public final int STATUS_PLAY = 1;
+    public final int STATUS_PAUSE = 2;
     //Status of simulation stopped = 0, running = 1, paused = 2
     private int status = 0;
     //Speed of Simulation
@@ -51,13 +51,13 @@ public class SimulatorController {
         playButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (playButton.getText() == "Play") {
-                    playButton.setText("Pause");
-                    setStatus(STATUS_PLAY);
-                }
-                else {
+                if (getStatus() == STATUS_PLAY) {
                     playButton.setText("Play");
                     setStatus(STATUS_PAUSE);
+                }
+                else {
+                    playButton.setText("Pause");
+                    setStatus(STATUS_PLAY);
                 }
             }
         });
@@ -110,27 +110,27 @@ public class SimulatorController {
     }
 
     public int getStatus() {
-        return status;
+        return this.status;
     }
 
-    public void setStatus(int setStatus) {
-        status = setStatus;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
-    public void setSpeed(int setSpeed) {
-        speed = setSpeed;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     public int getDawdle() {
-        return dawdle;
+        return this.dawdle;
     }
 
-    public void setDawdle(int setDawdle) {
-        dawdle = setDawdle;
+    public void setDawdle(int dawdle) {
+        this.dawdle = dawdle;
     }
 
 }

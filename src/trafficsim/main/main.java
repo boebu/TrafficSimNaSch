@@ -44,16 +44,20 @@ public class main {
         Vehicle v2 = new VehicleImpl(scen.getLane(1).getFirstCell());
 
         while (true) {
-            test = test + 5;
-            if (test >= CELLS) {
-                test = 0;
-            }
+
             Thread.sleep(DELAY);
 
-            v1.move(scen.getLane(0).getCells().get(test));
-            v2.move(scen.getLane(1).getCells().get(test/2));
+            if (cont.getStatus() == cont.STATUS_PLAY) {
 
-            panl.repaint();
+                test = test + 5;
+                if (test >= CELLS) {
+                    test = 0;
+                }
+                v1.move(scen.getLane(0).getCells().get(test));
+                v2.move(scen.getLane(1).getCells().get(test/2));
+
+                panl.repaint();
+            }
         }
     }
 
