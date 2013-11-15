@@ -29,6 +29,7 @@ public class VehicleImpl implements Vehicle {
         this.current.setVehicle(this);
         this.driver = new DriverImplDefault();
         this.driver.setVehicle(this);
+        this.speed = (int)Math.round(Math.random()*5);
 
     }
 
