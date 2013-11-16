@@ -1,11 +1,10 @@
 package trafficsim.test;
 
 import trafficsim.scenery.*;
-import trafficsim.simulator.*;
+import trafficsim.simulator.Vehicle2;
+import trafficsim.simulator.VehicleImpl2;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,40 +16,55 @@ import java.util.ListIterator;
 public class HelloWorld {
     public static void main(String[] args) {
 
-        Scenario sc = new ScenarioImpl("Scenario 1",1,1,1500);
+        ArrayList<StreetElement> street = new ArrayList<StreetElement>();
+
+        StreetElement s1 =  new StartStreetElement(Direction.EAST);
+        StreetElement s2 = new StraightStreetElement(s1,1,1,200);
+        street.add(s1);
+        street.add(s2);
+        street.add(new StraightStreetElement(street.get(1),1,1,200));
+        street.add(new StraightStreetElement(street.get(2),1,1,200));
+        street.add(new StraightStreetElement(street.get(3),1,1,200));
+        Vehicle2 v = new VehicleImpl2(5,100);
+
+        //System.out.println(street.get(1).getLanes(street.get(0)));
+        street.get(1).getLanes(street.get(0)).get(0).add(v);
 
 
-        for(Lane lane:sc.getLanes()) {
-            for(Cell cell:lane.getCells()) {
-                //System.out.println(cell + " -> " + cell.next());
-            }
-        }
-        System.out.println(sc.getLane(0).getCells().get(0))  ;
-        Vehicle v1 = new VehicleImpl(sc.getLane(0).getFirstCell());
-        System.out.println(v1.getCell().isEmpty());
-        System.out.println(v1.getCell().next().isEmpty())    ;
-
-        Cell c = v1.getCell();
-        int i = 0;
-        sc.getLane(0).getCells().get(3).setVehicle(new VehicleImpl(sc.getLane(0).getCells().get(3)));
-        while(c.hasNext() && i < 5) {
-
-            System.out.println(c + " " + c.isEmpty())   ;
-            c = c.next();
-            i++;
+   //     for(int i=0;i<5;i++){
+     //       for(int j=0;j<4;j++) {
+       //       street.get(j).calculateNextRound();
 
 
-        }
+         //   }
+      //      v.move();
 
-        v1.getDriver().drive();
+    //        System.out.println(v.getPosition());
+    //    }
 
-        System.out.println(v1.getCell());
+      System.out.println(street.get(1).getLanes(street.get(0)));
+        street.get(1).calculateNextRound();
+        System.out.println(v.getPosition());
+        v.move();
+        System.out.println(v.getPosition());
 
+        System.out.println(street.get(1).getLanes(street.get(0)));
+        street.get(1).calculateNextRound();
+        System.out.println(v.getPosition());
+        v.move();
+        System.out.println(v.getPosition());
 
-        System.out.println(sc.getLane(0).getCells().get(2).hasVehicle());
-        System.out.println(sc.getLane(0).getCells().get(3).hasVehicle() );
+        System.out.println(street.get(1).getLanes(street.get(0)));
+        street.get(1).calculateNextRound();
+        System.out.println(v.getPosition());
+        v.move();
+        System.out.println(v.getPosition());
 
-        System.out.println(Math.random()<0.15);
+        System.out.println(street.get(2).getLanes(street.get(1)));
+        street.get(1).calculateNextRound();
+        System.out.println(v.getPosition());
+        v.move();
+        System.out.println(v.getPosition());
 
     }
 

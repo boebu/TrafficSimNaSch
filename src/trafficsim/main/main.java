@@ -21,9 +21,9 @@ public class Main {
     {
         final String NAME = "Scenario 1";
         final int ID = 1;
-        final int LANES = 3;
+        final int LANES = 2;
         final double CELL_LENGTH = 7.5;
-        final int CELLS = 60;
+        final int CELLS = 100;
         final int LENGTH = (int) (CELL_LENGTH * CELLS);
 
         int test = 0;
