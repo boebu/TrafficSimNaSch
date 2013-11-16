@@ -6,6 +6,8 @@ import trafficsim.gui.SimulatorView;
 import trafficsim.scenery.Scenario;
 import trafficsim.scenery.ScenarioImpl;
 
+import javax.swing.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: fabianhutzli
@@ -23,7 +25,6 @@ public class Main {
         final double CELL_LENGTH = 7.5;
         final int CELLS = 60;
         final int LENGTH = (int) (CELL_LENGTH * CELLS);
-        final int DELAY = 1000;
 
         int test = 0;
 
@@ -39,7 +40,7 @@ public class Main {
 
         while (true) {
 
-            Thread.sleep(DELAY);
+            Thread.sleep(cont.getDelay());
 
             if (cont.getStatus() == cont.STATUS_PLAY) {
 
@@ -52,6 +53,10 @@ public class Main {
 
             panl.repaint();
         }
+    }
+
+    public void setDelay(int delay){
+
     }
 
 }

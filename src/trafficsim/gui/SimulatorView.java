@@ -15,13 +15,15 @@ public class SimulatorView {
     private static final Dimension PANEL_SIZE = new Dimension(900, 900);
 
     public static void create(SimulatorPanel simPanel) {
-        simPanel.setPreferredSize(PANEL_SIZE);
+        //simPanel.setPreferredSize(PANEL_SIZE);
+        //simPanel.setSize(PANEL_SIZE);
 
         JFrame simFrame = new JFrame("Traffic Simulator");
         simFrame.getContentPane().add(simPanel, BorderLayout.CENTER);
         simFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simFrame.pack();
         simFrame.setLocation(0, 0);
+        simFrame.setSize(PANEL_SIZE);
         simFrame.setVisible(true);
 
         simFrame.getContentPane().add(simPanel);

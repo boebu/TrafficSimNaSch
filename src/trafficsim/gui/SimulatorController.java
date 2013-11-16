@@ -24,7 +24,7 @@ public class SimulatorController {
     //Status of simulation stopped = 0, running = 1, paused = 2
     private int status = 0;
     //Speed of Simulation
-    private int speed = 0;
+    private int delay = 1000;
     //Percentage of Dawdler's
     private int dawdle = 0;
 
@@ -73,27 +73,27 @@ public class SimulatorController {
          * SLIDERs
          */
 
-        final JSlider speedSlider = new JSlider(0, 100, 50);
-        final JLabel speedLabel = new JLabel("Geschwindigkeit: " + speedSlider.getValue());
+        final JSlider delaySlider = new JSlider(125, 4000, 1000);
+        final JLabel delayLabel = new JLabel("Geschwindigkeit: " + delaySlider.getValue());
         final JSlider dawdleSlider = new JSlider(0, 100, 50);
-        final JLabel dawdleLabel = new JLabel("Trödelwahrscheinlichkeit: " + dawdleSlider.getValue());
-        speedSlider.setPaintTicks(true);
-        speedSlider.setPaintLabels(true);
-        speedSlider.setMinorTickSpacing(5);
-        speedSlider.setMajorTickSpacing(20);
+        final JLabel dawdleLabel = new JLabel("Trödelwahrscheinlichkeit: " + delaySlider.getValue());
+        delaySlider.setPaintTicks(true);
+        delaySlider.setPaintLabels(false);
+        delaySlider.setMinorTickSpacing(2);
+        delaySlider.setMajorTickSpacing(16);
         dawdleSlider.setPaintTicks(true);
         dawdleSlider.setPaintLabels(true);
         dawdleSlider.setMajorTickSpacing(20);
-        conFrame.add(speedLabel);
-        conFrame.add(speedSlider);
+        conFrame.add(delayLabel);
+        conFrame.add(delaySlider);
         conFrame.add(dawdleLabel);
         conFrame.add(dawdleSlider);
 
-        speedSlider.addChangeListener(new ChangeListener() {
+        delaySlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                speedLabel.setText("Geschwindigkeit: " + speedSlider.getValue());
-                setSpeed(speedSlider.getValue());
+                delayLabel.setText("Geschwindigkeit: " + delaySlider.getValue());
+                setDelay(delaySlider.getValue());
             }
         });
 
@@ -117,12 +117,12 @@ public class SimulatorController {
         this.status = status;
     }
 
-    public int getSpeed() {
-        return this.speed;
+    public int getDelay() {
+        return this.delay;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 
     public int getDawdle() {
