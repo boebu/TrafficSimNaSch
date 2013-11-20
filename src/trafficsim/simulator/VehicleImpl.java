@@ -1,8 +1,5 @@
 package trafficsim.simulator;
 
-import trafficsim.scenery.CellImpl;
-import trafficsim.scenery.Cell;
-
 /**
  * Created with IntelliJ IDEA.
  * User: boebu

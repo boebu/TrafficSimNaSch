@@ -1,7 +1,7 @@
 package trafficsim.simulator;
 
 
-import trafficsim.scenery.Direction;
+import javax.vecmath.Vector2d;
 
 
 /**
@@ -31,6 +31,10 @@ public interface Vehicle2 {
     public int getMaxMovement();
 
     public void move();
+
+    public int getCurrentLaneId();
+
+    public Vector2d getDirection();
 
 
 }

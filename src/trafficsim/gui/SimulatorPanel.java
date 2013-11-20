@@ -1,9 +1,5 @@
 package trafficsim.gui;
 
-import trafficsim.scenery.Cell;
-import trafficsim.scenery.Lane;
-import trafficsim.scenery.Scenario;
-
 import javax.swing.*;
 import java.awt.*;
 

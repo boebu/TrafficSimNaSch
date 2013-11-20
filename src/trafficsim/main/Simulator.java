@@ -3,10 +3,7 @@ package trafficsim.main;
 import trafficsim.gui.SimulatorController;
 import trafficsim.gui.SimulatorPanel;
 import trafficsim.gui.SimulatorView;
-import trafficsim.scenery.Scenario;
-import trafficsim.scenery.ScenarioImpl;
 import trafficsim.simulator.Driver;
-import trafficsim.simulator.Vehicle;
 import trafficsim.simulator.VehicleImpl;
 
 import java.util.ArrayList;

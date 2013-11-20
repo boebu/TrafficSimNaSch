@@ -3,10 +3,6 @@ package trafficsim.main;
 import trafficsim.gui.SimulatorPanel;
 import trafficsim.gui.SimulatorController;
 import trafficsim.gui.SimulatorView;
-import trafficsim.scenery.Scenario;
-import trafficsim.scenery.ScenarioImpl;
-
-import javax.swing.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +11,7 @@ import javax.swing.*;
  * Time: 17:15
  * To change this template use File | Settings | File Templates.
  */
-public class Main {
+public class Main2 {
 
     public static void main(String[] args) throws InterruptedException
     {

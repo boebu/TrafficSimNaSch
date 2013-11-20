@@ -1,8 +1,6 @@
 package trafficsim.simulator;
 
-import trafficsim.scenery.Direction;
-
-import java.util.HashMap;
+import javax.vecmath.Vector2d;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,8 +55,9 @@ public class VehicleImpl2 implements Vehicle2 {
 
     @Override
     public void setNewPosition(int position) {
-        this.moved = false;
-        this.newposition = position;
+
+            this.newposition = position;
+
     }
 
     @Override
@@ -74,6 +73,17 @@ public class VehicleImpl2 implements Vehicle2 {
         this.position = this.newposition;
         this.moved = true;
         }
+        moved = false;
+    }
+
+    @Override
+    public int getCurrentLaneId() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Vector2d getDirection() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
