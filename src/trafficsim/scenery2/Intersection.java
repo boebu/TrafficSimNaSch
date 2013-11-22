@@ -2,10 +2,7 @@ package trafficsim.scenery2;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,23 +16,103 @@ public class Intersection {
     private Point position;
     private Hashtable<Intersection, Street> outgoingStreets;
     private Hashtable<Intersection, Street> incomingStreets;
+    private Hashtable<Street, Hashtable<Direction, Street>> routing;
     private ArrayList<Street> sortedOutgoingStreets;
 
     public Intersection(int x, int y) {
         this.position = new Point(x,y);
         this.outgoingStreets = new Hashtable<Intersection, Street>();
         this.incomingStreets = new Hashtable<Intersection, Street>();
+        this.sortedOutgoingStreets = new ArrayList<Street>();
     }
 
-    public ArrayList<Street> sort() {
-        sortedOutgoingStreets = new ArrayList<Street>();
-         for(Street s:outgoingStreets.values()) {
-             sortedOutgoingStreets.add(s);
-         }
+    public void sort() {
+//        Collections.sort(this.sortedOutgoingStreets, new Comparator<Street>() {
+//            @Override
+//            public int compare(Street o1, Street o2) {
+//                double result1 = Math.toDegrees(Math.atan2(o1.getDirection().x ,o1.getDirection().y));
+//                if(result1 < 0.0) {
+//                    result1 = 180-(180-Math.abs(result1));
+//                } else {
+//                    result1 = 180+(180-result1);
+//                }
+//                double result2 = Math.toDegrees(Math.atan2(o2.getDirection().x ,o2.getDirection().y));
+//                if(result2 < 0.0) {
+//                    result2 = 180-(180-Math.abs(result2));
+//                } else {
+//                    result2 = 180+(180-result2);
+//                }
+//                if(result1 > result2) {
+//                    return 1;
+//                } else if(result1 < result2) {
+//                    return -1;
+//                } else {
+//                    return 0;
+//                }
+//            }
+//        });
         Collections.sort(sortedOutgoingStreets);
-        return sortedOutgoingStreets;
+
     }
 
+    public void initRouting() {
+        this.routing = new Hashtable<Street, Hashtable<Direction, Street>>();
+        for(Street incoming:incomingStreets.values()) {
+            this.routing.put(incoming,new Hashtable<Direction, Street>());
+            this.routing.get(incoming).putAll(getOutgoingStreetDirection(incoming));
+        }
+    }
+
+    private Hashtable<Direction, Street> getOutgoingStreetDirection(Street incoming) {
+        // create orthogonal Vector to incoming street Direction
+        Vector2d orth = new Vector2d(incoming.getDirection().y,incoming.getDirection().x);
+        Hashtable<Direction, Street> routes = new Hashtable<Direction, Street>();
+        Hashtable<Double, Street> httmp = new Hashtable<Double, Street>();
+        Double[] angles = new Double[3];
+        int i = 0;
+        for(Street outgoing:outgoingStreets.values()) {
+
+            Vector2d tmpv = new Vector2d(outgoing.getDirection());
+            tmpv.add(incoming.getDirection());
+            Double angle = Math.toDegrees(orth.angle(tmpv));
+            httmp.put(angle,outgoing);
+            if(!tmpv.equals(new Vector2d())) {
+                angles[i] = angle;
+                i++;
+            }
+        }
+        Arrays.sort(angles);
+        routes.put(Direction.RIGHT,httmp.get(angles[0]));
+        routes.put(Direction.STRAIGHT, httmp.get(angles[1]));
+        routes.put(Direction.LEFT,httmp.get(angles[2]));
+
+
+        return routes;
+    }
+
+//    public Street getLeftStreet(Street s) {
+//         Vector2d orth = new Vector2d(s.getDirection().y,s.getDirection().x);
+//
+//        Vector2d inv = new Vector2d(s.getDirection());
+//        inv.negate();
+//
+//        //System.out.println(s.getId()+ " (" + s.getDirection() +") orth( "+ orth + ") " + s.getDirection().equals(new Vector2d()) +" " + Math.toDegrees(orth.angle(s.getDirection())));
+//
+//        for(Street x:sortedOutgoingStreets) {
+//             Vector2d tmpv = x.getDirection();
+//             tmpv.add(s.getDirection());
+//            //System.out.println("ANG " + tmpv + " this " +x.getId() + " end " + x.getDirection() + " s2 " + s.getDirection());
+//
+//             System.out.println(x.getId()+ " (" + x.getDirection() +") orth( "+ orth + ") " + x.getDirection().equals(new Vector2d()) +" " + Math.toDegrees(orth.angle(tmpv)));
+//         }
+//        return s;
+//
+//
+//    }
+
+    public Street getRoute(Street incoming, Direction dir) {
+        return this.routing.get(incoming).get(dir);
+    }
 
     public Point getPosition() {
         return this.position;
@@ -51,6 +128,7 @@ public class Intersection {
 
     public void addOutgoingStreet(Intersection i, Street s) {
         this.outgoingStreets.put(i,s);
+        this.sortedOutgoingStreets.add(s);
         i.addIncomingStreet(this,s);
     }
 

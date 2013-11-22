@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class Street implements Comparable<Street>{
 
     private int speedlimit;
+
+
     private int lanes = 1;
 
 
@@ -22,11 +24,14 @@ public class Street implements Comparable<Street>{
     private Vector2d direction;
     private Point start;
     private Point end;
+    // debug
+    private String id;
     ArrayList<ArrayList<Vehicle>> vehiclesOnStreet;
 
-    public Street(int speedlimit, int lanes) {
+    public Street(int speedlimit, int lanes, String id) {
         this.speedlimit = speedlimit;
         this.lanes = lanes;
+        this.id = id;
 
         vehiclesOnStreet = new ArrayList<ArrayList<Vehicle>>();
         //lanes in direction
@@ -43,6 +48,10 @@ public class Street implements Comparable<Street>{
 
     public Point getStart() {
         return this.start;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public Point getEnd() {
@@ -86,13 +95,26 @@ public class Street implements Comparable<Street>{
 
     @Override
     public int compareTo(Street o) {
-        Vector2d orth = new Vector2d(0,1);
-        if(this.direction.angle(orth) > o.direction.angle(orth)) {
-           return 1;
-        } else if(this.direction.angle(orth) < o.direction.angle(orth)) {
-           return -1;
+        double result1 = Math.toDegrees(Math.atan2(this.getDirection().x ,this.getDirection().y));
+        if(result1 < 0.0) {
+            result1 = 180-(180-Math.abs(result1));
+        } else {
+            result1 = 180+(180-result1);
+        }
+        double result2 = Math.toDegrees(Math.atan2(o.getDirection().x ,o.getDirection().y));
+        if(result2 < 0.0) {
+            result2 = 180-(180-Math.abs(result2));
+        } else {
+            result2 = 180+(180-result2);
+        }
+        if(result1 > result2) {
+            return 1;
+        } else if(result1 < result2) {
+            return -1;
         } else {
             return 0;
         }
     }
+
+
 }

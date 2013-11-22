@@ -1,5 +1,6 @@
 package trafficsim.test;
 
+import trafficsim.scenery2.Direction;
 import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
 import trafficsim.scenery2.Vehicle;
@@ -20,22 +21,27 @@ import java.util.LinkedList;
 public class HelloWorld {
     public static void main(String[] args) {
 
-        Intersection i1 = new Intersection(400,300);
-        Intersection i2 = new Intersection(100,100);
-        Intersection i3 = new Intersection(0,100);
-        Intersection i4 = new Intersection(100,0);
+        Intersection i1 = new Intersection(500,500);
+        Intersection i2 = new Intersection(600,500);
+        Intersection i3 = new Intersection(400,500);
+        Intersection i4 = new Intersection(500,200);
+        Intersection i5 = new Intersection(500,800);
 
 
 
 
-        Street st1 = new Street(5,2);
-        Street st2 = new Street(5,2);
-        Street st3 = new Street(5,2);
-        Street st4 = new Street(5,2);
+        Street st1 = new Street(5,2,"S1");
+        Street st2 = new Street(5,2,"S2");
+        Street st3 = new Street(5,2,"S3");
+        Street st4 = new Street(5,2,"S4");
+        Street st5 = new Street(5,2,"S5");
         i1.addOutgoingStreet(i2, st1);
         i2.addOutgoingStreet(i1,st2);
         i1.addOutgoingStreet(i3,st3);
         i1.addOutgoingStreet(i4,st4);
+        i1.addOutgoingStreet(i5,st5);
+
+
 
         System.out.println("*****");
 
@@ -49,34 +55,13 @@ public class HelloWorld {
         st2.initStreet(i2.getPosition(),i1.getPosition());
         st3.initStreet(i1.getPosition(),i3.getPosition());
         st4.initStreet(i1.getPosition(),i4.getPosition());
+        st5.initStreet(i1.getPosition(),i5.getPosition());
 
-        System.out.println(i1.sort());
+        i1.initRouting();
 
-        for(Street s:i1.sort()) {
-            System.out.println("Angle: " + s.getDirection().angle(new Vector2d(0,1)));
-        }
-
-        System.out.println("****");
-        System.out.println(st1.getStart());
+        System.out.println(i1.getRoute(st2, Direction.RIGHT).getId());
 
 
-        System.out.println(i1);
-        System.out.println(i2);
-        System.out.println(i1.getNextIntersections());
-        System.out.println(i2.getNextIntersections());
-
-        Vehicle v = new Vehicle(st1);
-
-        System.out.println(v.getDirection());
-        System.out.println(v.getPosition());
-               v.move();
-        Vehicle v2 = new Vehicle(st1);
-        System.out.println(v.getDirection());
-        System.out.println(v.getPosition());
-
-        System.out.println(v.getDirection());
-        System.out.println(v2.getDirection());
-        System.out.println(st1.getDirection());
 
     }
 
