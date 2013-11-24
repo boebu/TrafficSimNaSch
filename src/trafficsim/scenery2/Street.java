@@ -46,6 +46,10 @@ public class Street implements Comparable<Street>{
         this.calculateDirection();
     }
 
+    public int getNumOfLanes() {
+        return this.lanes;
+    }
+
     public Point getStart() {
         return this.start;
     }
@@ -81,12 +85,12 @@ public class Street implements Comparable<Street>{
     public Vehicle getNextVehicle(Vehicle v) {
         ArrayList<Vehicle> actualLane = this.vehiclesOnStreet.get(v.getCurrentLaneId());
         for(int i=0;i<actualLane.size();i++) {
+            Vehicle vtmp = actualLane.get(i);
             try {
-                Vehicle vtmp = actualLane.get(i);
                 if( v == vtmp ) {
-                    return actualLane.get(i+1);
+                    return actualLane.get(i-1);
                 }
-            } catch(ArrayIndexOutOfBoundsException ex) {
+            } catch(IndexOutOfBoundsException ex) {
                 return null;
             }
         }
