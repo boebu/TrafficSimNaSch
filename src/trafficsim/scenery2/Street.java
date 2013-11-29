@@ -58,6 +58,10 @@ public class Street implements Comparable<Street>{
         return this.end;
     }
 
+    public int getLanes() {
+        return this.lanes;
+    }
+
     public void calculateDirection() {
         Vector2d start = new Vector2d(this.start.getX(),this.start.getY());
         this.direction = new Vector2d(this.end.getX(), this.end.getY());
