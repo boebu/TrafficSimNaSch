@@ -62,6 +62,7 @@ public class HelloWorld {
 
 
         i1.initRouting();
+        //i1.initIntersectionController();
 
         System.out.println(i1.getRoute(st2, Direction.STRAIGHT).getId());
 
@@ -90,9 +91,32 @@ public class HelloWorld {
         System.out.println(v.getPosition());
         System.out.println(v.getSpeed());
 
+        v.calcNewPosition();
+
+        v.move();
+
+        System.out.println(v.getPosition());
+        System.out.println(v.getSpeed());
+
+        v.calcNewPosition();
+
+        v.move();
+
+        System.out.println(v.getPosition());
+        System.out.println(v.getSpeed());
+
+
+        for(int i=0;i<st2.getNumOfLanes();i++) {
+             System.out.println("LS " + st2.getLaneStart(i));
+             System.out.println("LE " + st2.getLaneEnd(i));
+        }
 
 
 
     }
+
+
+
+
 
 }

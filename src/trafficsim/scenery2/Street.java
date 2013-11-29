@@ -14,16 +14,14 @@ import java.util.ArrayList;
  */
 public class Street implements Comparable<Street>{
 
+    private static int LANE_WIDTH=3;
     private int speedlimit;
-
-
     private int lanes = 1;
-
-
-
     private Vector2d direction;
+    private Vector2d orthogonal;
     private Point start;
     private Point end;
+    private Intersection nextIntersection;
     // debug
     private String id;
     ArrayList<ArrayList<Vehicle>> vehiclesOnStreet;
@@ -44,6 +42,10 @@ public class Street implements Comparable<Street>{
         this.start = s;
         this.end = e;
         this.calculateDirection();
+    }
+
+    public int getSpeedlimit() {
+        return this.speedlimit;
     }
 
     public int getNumOfLanes() {
@@ -67,6 +69,9 @@ public class Street implements Comparable<Street>{
         this.direction = new Vector2d(this.end.getX(), this.end.getY());
         this.direction.sub(start);
         this.direction.normalize();
+        calculateLanePosition();
+        getLanePoint(this.start,0);
+
     }
 
     public Vector2d getDirection() {
@@ -118,6 +123,36 @@ public class Street implements Comparable<Street>{
         } else {
             return 0;
         }
+    }
+
+    public Intersection getNextIntersection() {
+        return this.nextIntersection;
+    }
+
+    public void setNextIntersection(Intersection i) {
+        this.nextIntersection = i;
+    }
+
+    public Point getLaneStart(int laneId) {
+        return getLanePoint(this.start,laneId);
+    }
+
+    public Point getLaneEnd(int laneId) {
+        return getLanePoint(this.end,laneId);
+    }
+
+    private void calculateLanePosition() {
+        this.orthogonal = new Vector2d(-this.direction.y,this.direction.x);
+        this.orthogonal.normalize();
+        System.out.println("DIR : " + this.direction);
+        System.out.println("ORTH: " + this.orthogonal);
+    }
+
+    private Point getLanePoint(Point p, int laneId) {
+       Vector2d tmpV = new Vector2d(this.orthogonal);
+        tmpV.normalize();
+        tmpV.scale((laneId+1)*LANE_WIDTH);
+        return new Point((int)(p.x+tmpV.x),(int)(p.y+tmpV.y));
     }
 
 
