@@ -18,6 +18,7 @@ public class Intersection {
     private Hashtable<Intersection, Street> incomingStreets;
     private Hashtable<Street, Hashtable<Direction, Street>> routing;
     private ArrayList<Street> sortedOutgoingStreets;
+    private IntersectionController intersectionController;
 
     public Intersection(int x, int y) {
         this.position = new Point(x,y);
@@ -63,6 +64,15 @@ public class Intersection {
         }
     }
 
+    public void setIntersectionController(IntersectionController ic) {
+        this.intersectionController = ic;
+        ic.setIntersection(this);
+    }
+
+    public Collection<Street> getIncomingStreets() {
+        return this.incomingStreets.values();
+    }
+
     private Hashtable<Direction, Street> getOutgoingStreetDirection(Street incoming) {
         // create orthogonal Vector to incoming street Direction
         Vector2d orth = new Vector2d(incoming.getDirection().y,incoming.getDirection().x);
@@ -82,9 +92,14 @@ public class Intersection {
             }
         }
         Arrays.sort(angles);
+
         routes.put(Direction.RIGHT,httmp.get(angles[0]));
-        routes.put(Direction.STRAIGHT, httmp.get(angles[1]));
-        routes.put(Direction.LEFT,httmp.get(angles[2]));
+        if(angles.length >= 2) {
+            routes.put(Direction.STRAIGHT, httmp.get(angles[1]));
+        }
+        if(angles.length == 3) {
+            routes.put(Direction.LEFT,httmp.get(angles[2]));
+        }
 
 
         return routes;
@@ -129,6 +144,7 @@ public class Intersection {
     public void addOutgoingStreet(Intersection i, Street s) {
         this.outgoingStreets.put(i,s);
         this.sortedOutgoingStreets.add(s);
+        s.setNextIntersection(i);
         i.addIncomingStreet(this,s);
     }
 
@@ -138,6 +154,10 @@ public class Intersection {
 
     public Set<Intersection> getNextIntersections() {
         return this.outgoingStreets.keySet();
+    }
+
+    public Set<Direction> getDirections(Street incoming) {
+        return this.routing.get(incoming).keySet();
     }
 
 
