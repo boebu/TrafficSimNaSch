@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Street implements Comparable<Street>{
 
-    private static int LANE_WIDTH=3;
+    private static int LANE_WIDTH=4;
     private int speedlimit;
     private int lanes = 1;
     private Vector2d direction;

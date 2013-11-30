@@ -1,8 +1,11 @@
 package trafficsim.gui;
 
+import trafficsim.scenery2.Intersection;
+import trafficsim.scenery2.Vehicle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,47 +14,37 @@ import java.awt.*;
  * Time: 14:48
  * To change this template use File | Settings | File Templates.
  */
-public class VehiclePanel extends JPanel {
-    private final int CELL_SIZE = 12;
-
+public class VehiclePanel extends JLayeredPane {
+    private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     @Override
     protected void paintComponent(Graphics g) {
-        /*int i = 0;
-        int j = 0;
+        int vehicleSize = 4;
+
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
-        for(Lane lane : scen.getLanes()) {
-            for(Cell cell : lane.getCells()) {
-                if(cell.hasVehicle()) {
 
-                    switch(cell.getVehicle().getSpeed()) {
-                        case 0: g.setColor(new Color(255,0,0));
-                            break;
-                        case 1: g.setColor(new Color(255, 74, 22));
-                            break;
-                        case 2: g.setColor(new Color(255, 196, 42));
-                            break;
-                        case 3: g.setColor(new Color(196, 255, 22));
-                            break;
-                        case 4: g.setColor(new Color(137, 255, 9));
-                            break;
-                        case 5: g.setColor(new Color(0, 255,0));
-                            break;
-                    }
-                    g.fillRect(i * CELL_SIZE, j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        for(Vehicle vehicle : vehicles){
+            /*switch(vehicle.getSpeed()) {
+                case 0: g.setColor(new Color(255,0,0));
+                    break;
+                case 1: g.setColor(new Color(255, 74, 22));
+                    break;
+                case 2: g.setColor(new Color(255, 196, 42));
+                    break;
+                case 3: g.setColor(new Color(196, 255, 22));
+                    break;
+                case 4: g.setColor(new Color(137, 255, 9));
+                    break;
+                case 5: g.setColor(new Color(0, 255,0));
+                    break;
+            }*/
 
-                }
-                else {
-                    g.setColor(new Color(0,0,0));
-                    g.drawRect(i * CELL_SIZE, j * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            g.fillOval((int) vehicle.getPosition().x, (int) vehicle.getPosition().y, vehicleSize, vehicleSize);
+        }
+    }
 
-                }
-                i++;
-            }
-            j++;
-            i = 0;
-        } */
+    public void setVehicles(ArrayList<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
 
