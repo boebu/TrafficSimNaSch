@@ -34,6 +34,8 @@ public class Initial {
         intersections.add(i3);
         Intersection i4 = new Intersection(500,50);
         intersections.add(i4);
+        Intersection i5 = new Intersection(800,400);
+        intersections.add(i5);
 
         // STREETS
 
@@ -53,6 +55,10 @@ public class Initial {
         streets.add(st7);
         Street st8 = new Street(5,2,"S8");
         streets.add(st8);
+        Street st9 = new Street(5,2,"S9");
+        streets.add(st9);
+        Street st10 = new Street(5,2,"S10");
+        streets.add(st10);
 
         // STREET <> INTERSECTIONS
 
@@ -60,21 +66,43 @@ public class Initial {
         i2.addOutgoingStreet(i1, st2);
         st1.initStreet(i1.getPosition(),i2.getPosition());
         st2.initStreet(i2.getPosition(),i1.getPosition());
+        st1.resetStartEndPoint();
+        st2.resetStartEndPoint();
 
         i2.addOutgoingStreet(i3, st3);
         i3.addOutgoingStreet(i2, st4);
         st3.initStreet(i2.getPosition(),i3.getPosition());
         st4.initStreet(i3.getPosition(),i2.getPosition());
+        st3.resetStartEndPoint();
+        st4.resetStartEndPoint();
 
         i3.addOutgoingStreet(i4, st5);
         i4.addOutgoingStreet(i3, st6);
         st5.initStreet(i3.getPosition(),i4.getPosition());
         st6.initStreet(i4.getPosition(),i3.getPosition());
+        st5.resetStartEndPoint();
+        st6.resetStartEndPoint();
 
         i4.addOutgoingStreet(i1, st7);
         i1.addOutgoingStreet(i4, st8);
         st7.initStreet(i4.getPosition(),i1.getPosition());
         st8.initStreet(i1.getPosition(),i4.getPosition());
+        st7.resetStartEndPoint();
+        st8.resetStartEndPoint();
+
+        i4.addOutgoingStreet(i5,st9);
+        i5.addOutgoingStreet(i1,st10);
+        st9.initStreet(i4.getPosition(),i5.getPosition());
+        st10.initStreet(i5.getPosition(),i1.getPosition());
+        st9.resetStartEndPoint();
+        st10.resetStartEndPoint();
+
+
+        i1.initRouting();
+        i2.initRouting();
+        i3.initRouting();
+        i4.initRouting();
+        i5.initRouting();
 
         // VEHICLES
 
@@ -84,8 +112,8 @@ public class Initial {
         vehicles.add(v2);
         Vehicle v3 = new Vehicle(st1);
         vehicles.add(v3);
-        Vehicle v4 = new Vehicle(st1);
-        vehicles.add(v4);
+       // Vehicle v4 = new Vehicle(st1);
+       // vehicles.add(v4);
 
         System.out.println(v1.getPosition());
         System.out.println(v2.getPosition());

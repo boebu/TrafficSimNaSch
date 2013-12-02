@@ -29,8 +29,10 @@ public class Vehicle {
         this.direction = new Vector2d(s.getDirection());
         this.direction.normalize();
         this.speed = 3;
-        this.position = new Vector2d(s.getStart().getX(),s.getStart().getY());
+        //this.position = new Vector2d(s.getStart().getX(),s.getStart().getY());
+
         this.laneId = 0;
+        this.position = new Vector2d((s.getLaneStart(this.laneId)).getX(),s.getLaneStart(this.laneId).getY());
     }
 
 
@@ -77,8 +79,14 @@ public class Vehicle {
         if(maxlength < (MAX_SPEED*SPEEDMULTIPLIER) && next == null) {
             System.out.println("is near ntersection");
              System.out.println(this.currentStreet.getNextIntersection());
-            this.nextStreet = this.currentStreet.getNextIntersection().getRoute(currentStreet,(Direction)this.currentStreet.getNextIntersection().getDirections(currentStreet).toArray()[1]);
-            System.out.println(nextStreet);
+            this.nextStreet = this.currentStreet.getNextIntersection().getRoute(currentStreet,(Direction)this.currentStreet.getNextIntersection().getDirections(currentStreet).toArray()[0]);
+            System.out.println(this.currentStreet.getNextIntersection().getDirections(currentStreet));
+            decelerate(this.speed - (int)Math.floor(maxlength / SPEEDMULTIPLIER));
+            this.currentStreet.leaveStreet(this);
+            this.nextStreet.enterStreet(this);
+            this.currentStreet = this.nextStreet;
+            this.direction = this.currentStreet.getDirection();
+            this.position = new Vector2d(this.currentStreet.getLaneStart(this.laneId).x,this.currentStreet.getLaneStart(this.laneId).y);
             // TODO near intersection action?
             // slow down check intersection state based on route (go/nogo) wait for phase
         } else {

@@ -128,8 +128,8 @@ public class Intersection {
         Vector2d orth = new Vector2d(-incoming.getDirection().y,incoming.getDirection().x);
         Hashtable<Direction, Street> routes = new Hashtable<Direction, Street>();
         Hashtable<Double, Street> httmp = new Hashtable<Double, Street>();
-        Double[] angles = new Double[3];
-        int i = 0;
+        //Double[] angles = new Double[3];
+        ArrayList<Double> angles = new ArrayList<Double>();
         for(Street outgoing:outgoingStreets.values()) {
 
             Vector2d tmpv = new Vector2d(outgoing.getDirection());
@@ -137,18 +137,17 @@ public class Intersection {
             Double angle = Math.toDegrees(orth.angle(tmpv));
             httmp.put(angle,outgoing);
             if(!tmpv.equals(new Vector2d())) {
-                angles[i] = angle;
-                i++;
+                angles.add(angle);
             }
         }
-        Arrays.sort(angles);
+        Collections.sort(angles);
 
-        routes.put(Direction.RIGHT,httmp.get(angles[0]));
-        if(angles.length >= 2) {
-            routes.put(Direction.STRAIGHT, httmp.get(angles[1]));
+        routes.put(Direction.RIGHT,httmp.get(angles.get(0)));
+        if(angles.size() >= 2) {
+            routes.put(Direction.STRAIGHT, httmp.get(angles.get(1)));
         }
-        if(angles.length == 3) {
-            routes.put(Direction.LEFT,httmp.get(angles[2]));
+        if(angles.size() == 3) {
+            routes.put(Direction.LEFT,httmp.get(angles.get(2)));
         }
 
 
