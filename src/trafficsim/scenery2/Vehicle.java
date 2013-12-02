@@ -20,6 +20,7 @@ public class Vehicle {
     private int speed;
     private Vector2d newPos;
     private Street currentStreet;
+    private Street nextStreet;
     private Intersection nextIntersection;
 
     public Vehicle(Street s) {
@@ -76,6 +77,8 @@ public class Vehicle {
         if(maxlength < (MAX_SPEED*SPEEDMULTIPLIER) && next == null) {
             System.out.println("is near ntersection");
              System.out.println(this.currentStreet.getNextIntersection());
+            this.nextStreet = this.currentStreet.getNextIntersection().getRoute(currentStreet,(Direction)this.currentStreet.getNextIntersection().getDirections(currentStreet).toArray()[1]);
+            System.out.println(nextStreet);
             // TODO near intersection action?
             // slow down check intersection state based on route (go/nogo) wait for phase
         } else {
