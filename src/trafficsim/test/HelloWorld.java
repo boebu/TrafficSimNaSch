@@ -35,27 +35,30 @@ public class HelloWorld {
         Street st3 = new Street(5,2,"S3");
         Street st4 = new Street(5,2,"S4");
         Street st5 = new Street(5,2,"S5");
+        Street st6 = new Street(5,2,"S6");
         i1.addOutgoingStreet(i2, st1);
         i2.addOutgoingStreet(i1,st2);
         i1.addOutgoingStreet(i3,st3);
+        i3.addOutgoingStreet(i1,st6);
         i1.addOutgoingStreet(i4,st4);
         i1.addOutgoingStreet(i5,st5);
 
 
 
-        System.out.println("*****");
-
-        System.out.println(i1.getOutgoingStreet(i2));
-        System.out.println(i2.getIncomingStreet(i1));
-        System.out.println("*****");
-        System.out.println(i2.getOutgoingStreet(i1));
-        System.out.println(i1.getIncomingStreet(i2));
 
         st1.initStreet(i1.getPosition(),i2.getPosition());
         st2.initStreet(i2.getPosition(),i1.getPosition());
         st3.initStreet(i1.getPosition(),i3.getPosition());
         st4.initStreet(i1.getPosition(),i4.getPosition());
         st5.initStreet(i1.getPosition(),i5.getPosition());
+        st6.initStreet(i3.getPosition(),i1.getPosition());
+        st1.resetStartEndPoint();
+        st2.resetStartEndPoint();
+        st3.resetStartEndPoint();
+        st4.resetStartEndPoint();
+        st5.resetStartEndPoint();
+        st6.resetStartEndPoint();
+
 
 
 
@@ -105,12 +108,18 @@ public class HelloWorld {
         System.out.println(v.getPosition());
         System.out.println(v.getSpeed());
 
+        v.calcNewPosition();
 
-        for(int i=0;i<st2.getNumOfLanes();i++) {
-             System.out.println("LS " + st2.getLaneStart(i));
-             System.out.println("LE " + st2.getLaneEnd(i));
-        }
+        v.move();
 
+        System.out.println(v.getPosition());
+        System.out.println(v.getSpeed());
+
+        i1.iteratePhase();
+        i1.iteratePhase();
+        i1.iteratePhase();
+        i1.iteratePhase();
+        i1.iteratePhase();
 
 
     }

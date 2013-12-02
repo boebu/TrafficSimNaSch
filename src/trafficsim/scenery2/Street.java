@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Street implements Comparable<Street>{
 
     private static int LANE_WIDTH=3;
+    private static int INTERSECTION_CORRECTION=16;
     private int speedlimit;
     private int lanes = 1;
     private Vector2d direction;
@@ -65,13 +66,31 @@ public class Street implements Comparable<Street>{
     }
 
     public void calculateDirection() {
+        // define Direction Vector
+        // define ortogonal Vector to Direction (90 Degree clockwise used for LanePoint Calculating
         Vector2d start = new Vector2d(this.start.getX(),this.start.getY());
         this.direction = new Vector2d(this.end.getX(), this.end.getY());
         this.direction.sub(start);
         this.direction.normalize();
-        calculateLanePosition();
-        getLanePoint(this.start,0);
+        this.orthogonal = new Vector2d(-this.direction.y,this.direction.x);
+        this.orthogonal.normalize();
 
+
+    }
+
+    public void resetStartEndPoint() {
+
+        // Reset Start / End Point to add some free Space for the Intersection (Intersection R=16)
+        Vector2d newStart = new Vector2d(this.direction);
+        newStart.scale(INTERSECTION_CORRECTION);
+        newStart.add(new Vector2d(this.start.getX(),this.start.getY()));
+        this.start = new Point((int)newStart.x,(int)newStart.y);
+
+        Vector2d newEnd = new Vector2d(this.direction);
+        newEnd.negate();
+        newEnd.scale(INTERSECTION_CORRECTION);
+        newEnd.add(new Vector2d(this.end.x,this.end.y));
+        this.end = new Point((int)newEnd.x,(int)newEnd.y);
     }
 
     public Vector2d getDirection() {
@@ -141,18 +160,15 @@ public class Street implements Comparable<Street>{
         return getLanePoint(this.end,laneId);
     }
 
-    private void calculateLanePosition() {
-        this.orthogonal = new Vector2d(-this.direction.y,this.direction.x);
-        this.orthogonal.normalize();
-        System.out.println("DIR : " + this.direction);
-        System.out.println("ORTH: " + this.orthogonal);
-    }
-
     private Point getLanePoint(Point p, int laneId) {
        Vector2d tmpV = new Vector2d(this.orthogonal);
         tmpV.normalize();
         tmpV.scale((laneId+1)*LANE_WIDTH);
         return new Point((int)(p.x+tmpV.x),(int)(p.y+tmpV.y));
+    }
+
+    public String toString() {
+        return "Street " + this.id + " S("+this.start.getX()+"/"+this.start.getY()+") E("+this.end.getX()+"/"+this.end.getY()+")";
     }
 
 

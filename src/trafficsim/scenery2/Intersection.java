@@ -13,11 +13,15 @@ import java.util.*;
  */
 public class Intersection {
 
+    private static int RADIUS = 16;
     private Point position;
     private Hashtable<Intersection, Street> outgoingStreets;
     private Hashtable<Intersection, Street> incomingStreets;
     private Hashtable<Street, Hashtable<Direction, Street>> routing;
     private ArrayList<Street> sortedOutgoingStreets;
+    private ArrayList<IntersectionStreet> StreetPhases = new ArrayList<IntersectionStreet>();
+    private int maxPhase;
+    private int phase;
     private IntersectionController intersectionController;
 
     public Intersection(int x, int y) {
@@ -25,6 +29,21 @@ public class Intersection {
         this.outgoingStreets = new Hashtable<Intersection, Street>();
         this.incomingStreets = new Hashtable<Intersection, Street>();
         this.sortedOutgoingStreets = new ArrayList<Street>();
+        this.phase = 0;
+    }
+
+    public int getRadius() {
+        return RADIUS;
+    }
+
+    public void iteratePhase() {
+       if(this.phase < this.maxPhase) {
+           this.phase++;
+       } else {
+           this.phase = 0;
+       }
+
+       System.out.println("PHASE " + this.phase);
     }
 
     public void sort() {
@@ -62,7 +81,38 @@ public class Intersection {
             this.routing.put(incoming,new Hashtable<Direction, Street>());
             this.routing.get(incoming).putAll(getOutgoingStreetDirection(incoming));
         }
+        initFlowPhases();
     }
+
+    private void initFlowPhases() {
+        int tmpphase = 0;
+        for(Street incoming:this.incomingStreets.values()) {
+            for(Street outgoing: this.routing.get(incoming).values()) {
+                IntersectionStreet is = new IntersectionStreet(5,2,incoming.getId() + outgoing.getId());
+                is.initStreet(incoming.getEnd(),outgoing.getStart());
+                for(IntersectionStreet tmpis: StreetPhases) {
+                    if(!checkStreetCollision(tmpis,is) || (tmpis.getEnd() == is.getStart() && tmpis.getStart() == tmpis.getEnd())) {
+                        is.setPhase(tmpis.getPhase());
+                        StreetPhases.add(is);
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
+                if(!StreetPhases.contains(is)) {
+                    is.setPhase(tmpphase);
+                    StreetPhases.add(is);
+                    tmpphase++;
+                }
+
+            }
+        }
+        this.maxPhase = tmpphase-1;
+        for(IntersectionStreet x: StreetPhases) {
+            System.out.println(x.getId() + " " + x.getStart() + " " + x.getEnd() + " " +  x.getPhase());
+        }
+    }
+
 
     public void setIntersectionController(IntersectionController ic) {
         this.intersectionController = ic;
@@ -75,7 +125,7 @@ public class Intersection {
 
     private Hashtable<Direction, Street> getOutgoingStreetDirection(Street incoming) {
         // create orthogonal Vector to incoming street Direction
-        Vector2d orth = new Vector2d(incoming.getDirection().y,incoming.getDirection().x);
+        Vector2d orth = new Vector2d(-incoming.getDirection().y,incoming.getDirection().x);
         Hashtable<Direction, Street> routes = new Hashtable<Direction, Street>();
         Hashtable<Double, Street> httmp = new Hashtable<Double, Street>();
         Double[] angles = new Double[3];
@@ -158,6 +208,30 @@ public class Intersection {
 
     public Set<Direction> getDirections(Street incoming) {
         return this.routing.get(incoming).keySet();
+    }
+
+    public void getWeightedDirections(Street incoming) {
+
+    }
+
+    public boolean canEnterIntersection(Street from, Street to) {
+
+         return false;
+    }
+
+    private static boolean checkStreetCollision(Street s1, Street s2) {
+        Point a1 = s1.getStart();
+        Point a2 = s1.getEnd();
+        Point b1 = s2.getStart();
+        Point b2 = s2.getEnd();
+        // structure idea from http://www.spieleprogrammierer.de/wiki/2D-Kollisionserkennung
+        double denom = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x-b1.x) * (a2.y-a1.y);
+        if (Math.abs(denom) < Math.exp(-6)) {
+            return false;
+        }
+        double ua = ((b2.x-b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x)) / denom;
+        double ub = ((a2.x-a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x)) / denom;
+        return ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1;
     }
 
 

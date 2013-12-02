@@ -1,5 +1,7 @@
 package trafficsim.scenery2;
 
+import javax.vecmath.Vector2d;
+
 /**
  * Created with IntelliJ IDEA.
  * User: boebu
@@ -13,6 +15,7 @@ public class IntersectionStreet extends Street {
 
       public IntersectionStreet(int speedlimit, int lanes, String id) {
           super(speedlimit,lanes,id);
+          this.phase = -1;
       }
 
     public int getPhase() {
