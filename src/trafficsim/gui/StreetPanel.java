@@ -1,6 +1,7 @@
 package trafficsim.gui;
 
 
+import trafficsim.scenery2.Direction;
 import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
 
@@ -25,11 +26,17 @@ public class StreetPanel extends JLayeredPane {
         Graphics2D g2d = (Graphics2D) g;
 
         // DRAW INTERSECTIONS
-        g.setColor(Color.BLACK);
-        g2d.setStroke(new BasicStroke(4));
+        g.setColor(Color.RED);
+        g2d.setStroke(new BasicStroke(1));
 
         for(Intersection intersection : intersections){
-            g.drawRect(intersection.getPosition().x-20, intersection.getPosition().y-20, 40, 40);
+            for(Street incomingStreet : intersection.getIncomingStreets()){
+                Street rightStreet = intersection.getRoute(incomingStreet, Direction.RIGHT);
+                g.drawLine(incomingStreet.getLaneEnd(incomingStreet.getNumOfLanes()).x,
+                        incomingStreet.getLaneEnd(incomingStreet.getNumOfLanes()).y,
+                        rightStreet.getLaneStart(rightStreet.getNumOfLanes()).x,
+                        rightStreet.getLaneStart(rightStreet.getNumOfLanes()).y);
+            }
         }
 
         // DRAW STREETS
@@ -38,11 +45,9 @@ public class StreetPanel extends JLayeredPane {
 
         for(Street street : streets){
 
-            for(int i = 0; i < street.getNumOfLanes(); i++){
+            for(int i = 0; i <= street.getNumOfLanes(); i++){
                 g.drawLine(street.getLaneStart(i).x, street.getLaneStart(i).y, street.getLaneEnd(i).x, street.getLaneEnd(i).y);
             }
-            int j = street.getNumOfLanes();
-            g.drawLine(street.getLaneStart(j).x, street.getLaneStart(j).y, street.getLaneEnd(j).x, street.getLaneEnd(j).y);
             g.drawLine(street.getStart().x, street.getStart().y, street.getEnd().x, street.getEnd().y);
         }
     }
