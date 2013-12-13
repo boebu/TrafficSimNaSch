@@ -41,7 +41,8 @@ public class StreetPanel extends JLayeredPane {
             for(int i = 0; i < street.getNumOfLanes(); i++){
                 g.drawLine(street.getLaneStart(i).x, street.getLaneStart(i).y, street.getLaneEnd(i).x, street.getLaneEnd(i).y);
             }
-
+            int j = street.getNumOfLanes();
+            g.drawLine(street.getLaneStart(j).x, street.getLaneStart(j).y, street.getLaneEnd(j).x, street.getLaneEnd(j).y);
             g.drawLine(street.getStart().x, street.getStart().y, street.getEnd().x, street.getEnd().y);
         }
     }

@@ -104,6 +104,7 @@ public class Street implements Comparable<Street>{
 
     public void leaveStreet(Vehicle v) {
         this.vehiclesOnStreet.get(v.getCurrentLaneId()).remove(v);
+        System.out.println(this + " Veh" + v.getPosition());
     }
 
     public Vehicle getNextVehicle(Vehicle v) {
@@ -119,6 +120,21 @@ public class Street implements Comparable<Street>{
             }
         }
         return null;
+    }
+
+    public Vehicle getFirstVehicle(int laneid) {
+        int size = this.vehiclesOnStreet.get(laneid).size();
+        try {
+            return this.vehiclesOnStreet.get(laneid).get(size-1);
+        } catch(IndexOutOfBoundsException ex) {
+            return null;
+        }
+    }
+
+    public double getStreetLength() {
+        Vector2d l = new Vector2d(this.end.x,this.end.y);
+        l.sub(new Vector2d(this.start.x,this.end.y));
+        return l.length();
     }
 
     @Override
@@ -163,7 +179,7 @@ public class Street implements Comparable<Street>{
     private Point getLanePoint(Point p, int laneId) {
        Vector2d tmpV = new Vector2d(this.orthogonal);
         tmpV.normalize();
-        tmpV.scale((laneId+1)*LANE_WIDTH);
+        tmpV.scale((laneId)*LANE_WIDTH);
         return new Point((int)(p.x+tmpV.x),(int)(p.y+tmpV.y));
     }
 

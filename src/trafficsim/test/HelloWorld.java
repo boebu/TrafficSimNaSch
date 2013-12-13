@@ -70,7 +70,7 @@ public class HelloWorld {
         System.out.println(i1.getRoute(st2, Direction.STRAIGHT).getId());
 
 
-        Vehicle v = new Vehicle(st2);
+        Vehicle v = new Vehicle(st2,"x");
 
         System.out.println(v.getPosition());
         System.out.println(v.getSpeed());
@@ -79,7 +79,7 @@ public class HelloWorld {
         System.out.println(v.getPosition());
         System.out.println(v.getSpeed());
 
-        Vehicle v2 = new Vehicle(st2);
+        Vehicle v2 = new Vehicle(st2,"y");
 
         v.calcNewPosition();
 
