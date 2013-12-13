@@ -24,6 +24,10 @@ public class Initial {
 
     public static void main(String[] args) throws InterruptedException {
 
+        long startTime = 0;
+        long endTime = 0;
+        long sleepTime = 0;
+
         // INTERSECTIONS
 
         Intersection i1 = new Intersection(500,500);
@@ -133,7 +137,8 @@ public class Initial {
         // TEST RUNNING
 
         while(true){
-            Thread.sleep(1000);
+
+            startTime = System.currentTimeMillis();
 
             for(Vehicle vehicle : vehicles){
                 vehicle.calcNewPosition();
@@ -141,6 +146,13 @@ public class Initial {
             }
 
             vehiclePanel.repaint();
+
+            endTime = System.currentTimeMillis();
+
+            sleepTime = 1000 - (endTime - startTime);
+            System.out.println(sleepTime);
+
+            Thread.sleep(sleepTime);
         }
 
     }
