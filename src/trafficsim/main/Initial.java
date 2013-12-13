@@ -7,6 +7,7 @@ import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
 import trafficsim.scenery2.Vehicle;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -26,16 +27,18 @@ public class Initial {
 
         // INTERSECTIONS
 
-        Intersection i1 = new Intersection(500,500);
+        Intersection i1 = new Intersection(600,600);
         intersections.add(i1);
-        Intersection i2 = new Intersection(200,500);
+        Intersection i2 = new Intersection(400,600);
         intersections.add(i2);
         Intersection i3 = new Intersection(100,100);
         intersections.add(i3);
-        Intersection i4 = new Intersection(500,50);
+        Intersection i4 = new Intersection(600,100);
         intersections.add(i4);
         Intersection i5 = new Intersection(800,400);
         intersections.add(i5);
+        Intersection i6 = new Intersection(1000,50);
+        intersections.add(i6);
 
         // STREETS
 
@@ -59,6 +62,20 @@ public class Initial {
         streets.add(st9);
         Street st10 = new Street(5,2,"S10");
         streets.add(st10);
+        Street st11 = new Street(5,2,"S11");
+        streets.add(st11);
+        Street st12 = new Street(5,2,"S12");
+        streets.add(st12);
+        Street st13 = new Street(5,2,"S13");
+        streets.add(st13);
+        Street st14 = new Street(5,2,"S14");
+        streets.add(st14);
+        Street st15 = new Street(5,2,"S15");
+        streets.add(st15);
+        Street st16 = new Street(5,2,"S16");
+        streets.add(st16);
+        Street start1 = new Street(5,2,"Start1");
+        streets.add(start1);
 
         // STREET <> INTERSECTIONS
 
@@ -92,10 +109,38 @@ public class Initial {
 
         i4.addOutgoingStreet(i5,st9);
         i5.addOutgoingStreet(i1,st10);
-        st9.initStreet(i4.getPosition(),i5.getPosition());
+        i5.addOutgoingStreet(i4,st11);
+        i1.addOutgoingStreet(i5,st12);
+        st9.initStreet(i4.getPosition(), i5.getPosition());
         st10.initStreet(i5.getPosition(),i1.getPosition());
+        st11.initStreet(i5.getPosition(),i4.getPosition());
+        st12.initStreet(i1.getPosition(),i5.getPosition());
         st9.resetStartEndPoint();
         st10.resetStartEndPoint();
+        st11.resetStartEndPoint();
+        st12.resetStartEndPoint();
+
+        i4.addOutgoingStreet(i6,st13);
+        i6.addOutgoingStreet(i4,st14);
+        i5.addOutgoingStreet(i6,st15);
+        i6.addOutgoingStreet(i5,st16);
+        st13.initStreet(i4.getPosition(),i6.getPosition());
+        st14.initStreet(i6.getPosition(),i4.getPosition());
+        st15.initStreet(i5.getPosition(),i6.getPosition());
+        st16.initStreet(i6.getPosition(),i5.getPosition());
+        st13.resetStartEndPoint();
+        st14.resetStartEndPoint();
+        st15.resetStartEndPoint();
+        st16.resetStartEndPoint();
+
+        Intersection istart = new Intersection(0,600);
+        istart.addOutgoingStreet(i2,start1);
+        start1.initStreet(istart.getPosition(),i2.getPosition());
+        start1.resetStartEndPoint();
+
+
+
+
 
 
         i1.initRouting();
@@ -103,20 +148,24 @@ public class Initial {
         i3.initRouting();
         i4.initRouting();
         i5.initRouting();
+        i6.initRouting();
 
         // VEHICLES
 
-        Vehicle v1 = new Vehicle(st2);
-        vehicles.add(v1);
-        Vehicle v2 = new Vehicle(st4);
-        vehicles.add(v2);
-        Vehicle v3 = new Vehicle(st1);
-        vehicles.add(v3);
-       // Vehicle v4 = new Vehicle(st1);
-       // vehicles.add(v4);
+//        Vehicle v1 = new Vehicle(st2);
+//        vehicles.add(v1);
+//        Vehicle v2 = new Vehicle(st4);
+//        vehicles.add(v2);
+//       Vehicle v3 = new Vehicle(st1,"V1");
+//        vehicles.add(v3);
+//
+//
+//       v3.calcNewPos();
+//        v3.move();
+//        Vehicle v4 = new Vehicle(st1,"V2");
+//        vehicles.add(v4);
 
-        System.out.println(v1.getPosition());
-        System.out.println(v2.getPosition());
+  //      System.out.println(v1.getPosition());
 
         // PANELS & VIEW
 
@@ -131,16 +180,49 @@ public class Initial {
         view.create(streetPanel, vehiclePanel);
 
         // TEST RUNNING
-
+        int x = 0;
+        int y = 0;
         while(true){
-            Thread.sleep(1000);
 
+            long starttime = System.currentTimeMillis();
             for(Vehicle vehicle : vehicles){
-                vehicle.calcNewPosition();
-                vehicle.move();
+                vehicle.calcNewPos();
+
+
+            }
+            for(Vehicle v: vehicles) {
+                v.move();
+                System.out.println(v.getId() + " pos: " +v.getPosition() + "Speed: " + v.getSpeed() + "Curr Street:" + v.getCurrentStreet());
+                Vehicle v2 = v.getCurrentStreet().getNextVehicle(v);
+                if(v2 != null) {
+                System.out.println(v.getId() + v.getPosition() + " front "+v2.getId() + v2.getPosition());
+                } else {
+                System.out.println("first in line: " + v.getPosition());
+                }
+            }
+            if(x == 10) {
+                for(Intersection i: intersections) {
+                    i.iteratePhase();
+
+                }
+               // vehicles.add(new Vehicle(st1,"VX"));
+                x = 0;
+            } else {
+                x++;
             }
 
+
+            if(Math.random()<0.3) {
+                if(y<200 && y % 2 == 0) {
+                vehicles.add(new Vehicle(start1,"V"+y));
+
+                }
+                y++;
+            }
             vehiclePanel.repaint();
+            long endtime = System.currentTimeMillis();
+            //Thread.sleep(500-(endtime-starttime));
+            Thread.sleep(100);
         }
 
     }

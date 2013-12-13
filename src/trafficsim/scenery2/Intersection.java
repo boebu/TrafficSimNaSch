@@ -20,6 +20,7 @@ public class Intersection {
     private Hashtable<Street, Hashtable<Direction, Street>> routing;
     private ArrayList<Street> sortedOutgoingStreets;
     private ArrayList<IntersectionStreet> StreetPhases = new ArrayList<IntersectionStreet>();
+    Random random = new Random();
     private int maxPhase;
     private int phase;
     private IntersectionController intersectionController;
@@ -209,13 +210,22 @@ public class Intersection {
         return this.routing.get(incoming).keySet();
     }
 
+    public Direction getNewDirection(Street incoming) {
+        Set<Direction> directions = this.routing.get(incoming).keySet();
+        return (Direction)directions.toArray()[this.random.nextInt(directions.size())];
+    }
+
     public void getWeightedDirections(Street incoming) {
 
     }
 
-    public boolean canEnterIntersection(Street from, Street to) {
-
-         return false;
+    public Street getIntersectionStreet(Street from, Street to) {
+         for(IntersectionStreet is: this.StreetPhases) {
+             if(is.getStart() == from.getEnd() && is.getEnd() == to.getStart() && is.getPhase() == this.phase) {
+                 return is;
+             }
+         }
+         return null;
     }
 
     private static boolean checkStreetCollision(Street s1, Street s2) {
