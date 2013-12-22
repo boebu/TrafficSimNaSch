@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class SimulatorView {
 
-    private static final Dimension FRAME_SIZE = new Dimension(1000, 1000);
+    private static final Dimension FRAME_SIZE = new Dimension(1200, 1000);
 
     public static void create(StreetPanel streetPanel, VehiclePanel vehiclePanel) {
         streetPanel.setSize(FRAME_SIZE);

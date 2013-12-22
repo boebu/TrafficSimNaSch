@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 public class Street implements Comparable<Street>{
 
-    private static int LANE_WIDTH=3;
-    private static int INTERSECTION_CORRECTION=16;
+    private static int LANE_WIDTH=6;
+    private static int INTERSECTION_CORRECTION=36;
     private int speedlimit;
     private int lanes = 1;
     private Vector2d direction;
@@ -176,6 +176,22 @@ public class Street implements Comparable<Street>{
         return getLanePoint(this.end,laneId);
     }
 
+    public int getLeftLane(int laneid) {
+        if(this.lanes-1 > laneid) {
+            return laneid+1;
+        } else {
+            return -1;  //equals error
+        }
+    }
+
+    public int getRightLane(int laneid) {
+        if(laneid>0) {
+            return laneid-1;
+        } else {
+            return -1; // equals error
+        }
+    }
+
     private Point getLanePoint(Point p, int laneId) {
        Vector2d tmpV = new Vector2d(this.orthogonal);
         tmpV.normalize();
@@ -185,6 +201,14 @@ public class Street implements Comparable<Street>{
 
     public String toString() {
         return "Street " + this.id + " S("+this.start.getX()+"/"+this.start.getY()+") E("+this.end.getX()+"/"+this.end.getY()+")";
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        ArrayList<Vehicle>  allvehicles = new ArrayList<Vehicle>();
+        for(ArrayList<Vehicle> av: this.vehiclesOnStreet) {
+            allvehicles.addAll(av);
+        }
+        return allvehicles;
     }
 
 

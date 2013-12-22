@@ -1,12 +1,15 @@
 package trafficsim.gui;
 
 
+import trafficsim.main.Sim;
 import trafficsim.scenery2.Direction;
 import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +43,7 @@ public class StreetPanel extends JLayeredPane {
         }
 
         // DRAW STREETS
-        g.setColor(Color.RED);
+        g.setColor(Color.GRAY);
         g2d.setStroke(new BasicStroke(1));
 
         for(Street street : streets){
@@ -50,6 +53,7 @@ public class StreetPanel extends JLayeredPane {
             }
             g.drawLine(street.getStart().x, street.getStart().y, street.getEnd().x, street.getEnd().y);
         }
+
     }
 
     public void setIntersections(ArrayList<Intersection> intersections) {

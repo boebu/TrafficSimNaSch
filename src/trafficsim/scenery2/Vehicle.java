@@ -100,7 +100,7 @@ public class Vehicle {
         Vector2d maxEndPoint;
         if(next == null) {
             // no vehicle in front of this street
-            maxEndPoint = new Vector2d(this.currentStreet.getEnd().x,this.currentStreet.getEnd().y);
+            maxEndPoint = new Vector2d(this.currentStreet.getLaneEnd(this.laneId).x,this.currentStreet.getLaneEnd(this.laneId).y);
             maxEndPoint.sub(this.position);
             this.newPos = new Vector2d(this.direction);
             if(maxEndPoint.length() < maxVehicleMove) {
@@ -117,8 +117,8 @@ public class Vehicle {
                     isVO.normalize();
                     Vehicle vnexts =  this.nextStreet.getFirstVehicle(this.laneId);
                     if(vnexts == null) {
-                        Vector2d nssv = new Vector2d(this.nextStreet.getStart().x,this.nextStreet.getStart().y);
-                        Vector2d nsev = new Vector2d(this.nextStreet.getEnd().x,this.nextStreet.getEnd().y);
+                        Vector2d nssv = new Vector2d(this.nextStreet.getLaneStart(this.laneId).x,this.nextStreet.getLaneStart(this.laneId).y);
+                        Vector2d nsev = new Vector2d(this.nextStreet.getLaneEnd(this.laneId).x,this.nextStreet.getLaneEnd(this.laneId).y);
                         nsev.sub(nssv);
                         if(nsev.length() < maxVehicleMove) {
 
@@ -129,8 +129,11 @@ public class Vehicle {
 
                     } else {
                         Vector2d vnextsV = new Vector2d(vnexts.getPosition());
-                        vnextsV.sub(new Vector2d(this.nextStreet.getStart().x,this.nextStreet.getStart().y));
+                        vnextsV.sub(new Vector2d(this.nextStreet.getLaneStart(this.laneId).x,this.nextStreet.getLaneStart(this.laneId).y));
                         double tmplen = vnextsV.length() - VEHICLE_LENGTH;
+                        if(tmplen < 0){
+                            tmplen=0;
+                        }
                         if(tmplen > maxVehicleMove) {
                             decelerate(this.speed - (int) Math.floor(maxVehicleMove / SPEEDMULTIPLIER));
                         } else {
@@ -179,7 +182,7 @@ public class Vehicle {
                             }
                         } else {
                             Vector2d vnextsV = new Vector2d(vnexts.getPosition());
-                            vnextsV.sub(new Vector2d(this.nextStreet.getStart().x,this.nextStreet.getStart().y));
+                            vnextsV.sub(new Vector2d(this.nextStreet.getLaneStart(this.laneId).x,this.nextStreet.getLaneStart(this.laneId).y));
                             double tmplen = vnextsV.length() - VEHICLE_LENGTH;
                             if(tmplen < 0){
                                 tmplen=0;
@@ -218,20 +221,24 @@ public class Vehicle {
             maxEndPoint.sub(this.position);
             double len = maxEndPoint.length();
             maxEndPoint.normalize();
-            if(len == 0)
-                System.out.print("ERROR 2 Vehicles same position?");
             maxEndPoint.scale(len-VEHICLE_LENGTH);
             if(maxEndPoint.length() < maxVehicleMove) {
-                System.out.println("ERR HERE: " + maxEndPoint.length());
-                System.out.println((int)Math.floor(maxEndPoint.length()/SPEEDMULTIPLIER));
                 decelerate(this.speed - (int)Math.floor(maxEndPoint.length()/SPEEDMULTIPLIER));
-                System.out.println("SP:" + this.speed);
+                if(this.currentStreet.getLeftLane(this.laneId) > 0) {
+                    System.out.println("MAYBE CHANGE STREET?");
+
+                }
             }
             this.newPos = new Vector2d(this.direction);
             this.newPos.scale(this.speed * SPEEDMULTIPLIER);
             this.newPos.add(this.position);
         }
 
+    }
+
+    public boolean laneChangePossible(int laneid) {
+       Vehicle v = this.currentStreet.getFirstVehicle(laneid);
+       return false;
     }
 
     public void calcNewPosition2() {

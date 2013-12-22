@@ -1,9 +1,11 @@
 package trafficsim.gui;
 
+import trafficsim.main.Sim;
 import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Vehicle;
 
 import javax.swing.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -16,15 +18,18 @@ import java.util.ArrayList;
  */
 public class VehiclePanel extends JLayeredPane {
     private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    private Vector2d defvector = new Vector2d(1,0);
 
     @Override
     protected void paintComponent(Graphics g) {
         int vehicleSize = 4;
 
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
 
         for(Vehicle vehicle : vehicles){
-            /*switch(vehicle.getSpeed()) {
+
+            switch(vehicle.getSpeed()) {
                 case 0: g.setColor(new Color(255,0,0));
                     break;
                 case 1: g.setColor(new Color(255, 74, 22));
@@ -37,14 +42,15 @@ public class VehiclePanel extends JLayeredPane {
                     break;
                 case 5: g.setColor(new Color(0, 255,0));
                     break;
-            }*/
-
-            g.fillOval((int) vehicle.getPosition().x, (int) vehicle.getPosition().y, vehicleSize, vehicleSize);
+            }
+            g2d.fillOval((int) vehicle.getPosition().x, (int) vehicle.getPosition().y, vehicleSize, vehicleSize);
+            //g2d.rotate(vehicle.getDirection().angle(defvector));
         }
     }
 
     public void setVehicles(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
+
     }
 
 

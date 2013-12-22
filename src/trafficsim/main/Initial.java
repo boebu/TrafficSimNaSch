@@ -29,7 +29,7 @@ public class Initial {
 
         Intersection i1 = new Intersection(600,600);
         intersections.add(i1);
-        Intersection i2 = new Intersection(400,600);
+        Intersection i2 = new Intersection(300,600);
         intersections.add(i2);
         Intersection i3 = new Intersection(100,100);
         intersections.add(i3);
@@ -76,6 +76,8 @@ public class Initial {
         streets.add(st16);
         Street start1 = new Street(5,2,"Start1");
         streets.add(start1);
+        Street end1 = new Street(5,2,"End1");
+        streets.add(end1);
 
         // STREET <> INTERSECTIONS
 
@@ -138,6 +140,12 @@ public class Initial {
         start1.initStreet(istart.getPosition(),i2.getPosition());
         start1.resetStartEndPoint();
 
+        Intersection iend = new Intersection(1200,50);
+        i6.addOutgoingStreet(iend,end1);
+        end1.initStreet(i6.getPosition(),iend.getPosition());
+        end1.resetStartEndPoint();
+
+
 
 
 
@@ -184,12 +192,19 @@ public class Initial {
         int y = 0;
         while(true){
 
+            for(Vehicle vdel:end1.getVehicles()) {
+                end1.leaveStreet(vdel);
+                vehicles.remove(vdel);
+                System.out.println("VEhicle removed: " + vdel);
+            }
+
             long starttime = System.currentTimeMillis();
             for(Vehicle vehicle : vehicles){
                 vehicle.calcNewPos();
 
 
             }
+
             for(Vehicle v: vehicles) {
                 v.move();
                 System.out.println(v.getId() + " pos: " +v.getPosition() + "Speed: " + v.getSpeed() + "Curr Street:" + v.getCurrentStreet());
@@ -212,8 +227,8 @@ public class Initial {
             }
 
 
-            if(Math.random()<0.3) {
-                if(y<200 && y % 2 == 0) {
+            if(Math.random()<0.5) {
+                if(y<500 && y % 2 == 0) {
                 vehicles.add(new Vehicle(start1,"V"+y));
 
                 }
