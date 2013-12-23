@@ -1,5 +1,6 @@
 package trafficsim.main;
 
+import trafficsim.gui.ControlPanel;
 import trafficsim.gui.SimulatorView;
 import trafficsim.gui.StreetPanel;
 import trafficsim.gui.VehiclePanel;
@@ -21,8 +22,9 @@ public class Simulator {
     private static ArrayList<Street> streets = new ArrayList<Street>();
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     StreetPanel streetPanel = new StreetPanel();
-    VehiclePanel vehiclePanel = new VehiclePanel();
+    public VehiclePanel vehiclePanel = new VehiclePanel();
     SimulatorView view = new SimulatorView();
+    ControlPanel controlPanel = new ControlPanel();
 
     public void initScenery() {
         // INTERSECTIONS
@@ -168,6 +170,7 @@ public class Simulator {
         vehiclePanel.setVehicles(vehicles);
 
         view.create(streetPanel, vehiclePanel);
+        controlPanel.init();
     }
 
     private int x = 0;
@@ -211,6 +214,14 @@ public class Simulator {
         }
 
         vehiclePanel.repaint();
+        controlPanel.updateTime();
+    }
+
+    public void reset() {
+        for(Vehicle v:vehicles) {
+            v.getCurrentStreet().leaveStreet(v);
+        }
+        vehicles.clear();
     }
 
 
