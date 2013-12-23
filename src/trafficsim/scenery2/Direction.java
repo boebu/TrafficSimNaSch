@@ -8,5 +8,5 @@ package trafficsim.scenery2;
  * To change this template use File | Settings | File Templates.
  */
 public enum Direction {
-    LEFT,RIGHT,STRAIGHT;
+    LEFT,RIGHT,STRAIGHT
 }

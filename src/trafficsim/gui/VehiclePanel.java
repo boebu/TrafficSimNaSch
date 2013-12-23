@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class VehiclePanel extends JLayeredPane {
     private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-    private Vector2d defvector = new Vector2d(1,0);
+    // --Commented out by Inspection (12/23/13 1:01 AM):private Vector2d defvector = new Vector2d(1,0);
 
     @Override
     protected void paintComponent(Graphics g) {
