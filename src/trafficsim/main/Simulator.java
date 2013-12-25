@@ -21,6 +21,8 @@ public class Simulator {
     private static ArrayList<Intersection> intersections = new ArrayList<Intersection>();
     private static ArrayList<Street> streets = new ArrayList<Street>();
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    private static double NEW_CAR_RATIO = 0.8;
+    private static int INTERSECTION_ITERATE_TICK = 10;
     StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
     SimulatorView view = new SimulatorView();
@@ -175,6 +177,14 @@ public class Simulator {
 
     private int x = 0;
 
+    public double getNewCarRatio() {
+        return NEW_CAR_RATIO;
+    }
+
+    public void setNewCarRatio(double n) {
+        NEW_CAR_RATIO = n;
+    }
+
     public void tick() {
 
         Street end1 = streets.get(streets.size()-1);
@@ -184,7 +194,7 @@ public class Simulator {
             System.out.println("VEhicle removed: " + vdel);
         }
 
-        if(x == 10) {
+        if(x == INTERSECTION_ITERATE_TICK) {
             for(Intersection i: intersections) {
                 i.iteratePhase();
 
@@ -205,11 +215,20 @@ public class Simulator {
             v.move();
         }
 
-        if(Math.random()<0.2) {
+        if(Math.random()<NEW_CAR_RATIO) {
             Street enter1 = streets.get(streets.size()-2);
-
-                    vehicles.add(new Vehicle(streets.get(streets.size()-2),"VX"));
-
+            // test if startpoint is free
+            int lane = ((int)(Math.random() * 100)) % enter1.getNumOfLanes();
+            Vehicle first = enter1.getFirstVehicle(lane);
+            if(first != null) {
+                if(first.getPosition().x != enter1.getLaneStart(lane).x || first.getPosition().y != enter1.getLaneStart(lane).y) {
+                    vehicles.add(new Vehicle(streets.get(streets.size()-2),lane,"VX"));
+                } else {
+                    System.out.println("WHAAAAT");
+                }
+            } else {
+                vehicles.add(new Vehicle(streets.get(streets.size()-2),lane,"VX"));
+            }
 
         }
 

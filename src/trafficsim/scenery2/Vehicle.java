@@ -31,14 +31,11 @@ public class Vehicle {
     //debug
     private String id;
 
-    public Vehicle(Street s,String id) {
+    public Vehicle(Street s, int laneid, String id) {
         this.id = id;
         this.currentStreet = s;
-        if(Math.random()<0.5) {
-            this.laneId = 1;
-        } else {
-            this.laneId = 0;
-        }
+        this.laneId = laneid;
+
 
 
         s.enterStreet(this);
@@ -47,9 +44,10 @@ public class Vehicle {
         this.speed = 3;
         //this.position = new Vector2d(s.getStart().getX(),s.getStart().getY());
 
-
+        System.out.println("LANEID:" + this.laneId);
 
         this.position = new Vector2d((s.getLaneStart(this.laneId)).getX(),s.getLaneStart(this.laneId).getY());
+        System.out.println("POS: " +this.position);
     }
 
 
@@ -70,9 +68,7 @@ public class Vehicle {
 
         this.position.set(this.newPos);
         if(changeStreet) {
-            System.out.println("Leave: " + currentStreet + this.id + this.getPosition());
             this.currentStreet.leaveStreet(this);
-            System.out.println("Enter: " + nextStreet + this.id + this.getPosition());
             this.nextStreet.enterStreet(this);
             this.currentStreet = this.nextStreet;
             this.direction = this.currentStreet.getDirection();
@@ -107,7 +103,6 @@ public class Vehicle {
                 // if max move is greater than street length, street change becomes nessecary
                 if(isInIntersection) {
                     // if vehicle is in an intersection Street
-                    System.out.println("leaving intersection " + this.currentStreet);
                     this.isInIntersection = false;
                     this.changeStreet = true;
                     this.nextStreet = this.nextStreetAfterIntersection;
@@ -146,7 +141,6 @@ public class Vehicle {
                     this.newPos.add(isVO);
                 } else {
                     // vehicle is not in an intersection, so enter if possible
-                    System.out.println("entering intersetion");
                     this.currentIntersection = this.currentStreet.getNextIntersection();
                     // get random new direction for this vehicle
                     if(this.intersectionDirection == null) {
@@ -158,9 +152,7 @@ public class Vehicle {
                     Street iStreet = this.currentIntersection.getIntersectionStreet(this.currentStreet,this.nextStreetAfterIntersection);
                     if(iStreet == null) {
                         // if null means redlight, vehicle has to stop
-                        System.out.println("oops, have to wait (redlight)" + this.id + "Street: " + this.currentStreet);
                         decelerate(this.speed - (int) Math.floor(maxEndPoint.length() / SPEEDMULTIPLIER));
-                        System.out.println("SPEED: " + this.speed);
                         this.newPos.scale(this.speed*SPEEDMULTIPLIER);
                         this.newPos.add(this.position);
                     }  else {
@@ -214,9 +206,6 @@ public class Vehicle {
 
         } else {
             double a = next.getPosition().x;
-            if(this.position.y < a) {
-                System.out.println("HELP");
-            }
             maxEndPoint = new Vector2d(next.getPosition());
             maxEndPoint.sub(this.position);
             double len = maxEndPoint.length();
@@ -224,10 +213,6 @@ public class Vehicle {
             maxEndPoint.scale(len-VEHICLE_LENGTH);
             if(maxEndPoint.length() < maxVehicleMove) {
                 decelerate(this.speed - (int)Math.floor(maxEndPoint.length()/SPEEDMULTIPLIER));
-                if(this.currentStreet.getLeftLane(this.laneId) > 0) {
-                    System.out.println("MAYBE CHANGE STREET?");
-
-                }
             }
             this.newPos = new Vector2d(this.direction);
             this.newPos.scale(this.speed * SPEEDMULTIPLIER);

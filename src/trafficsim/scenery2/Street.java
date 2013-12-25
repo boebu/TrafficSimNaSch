@@ -104,7 +104,6 @@ public class Street implements Comparable<Street>{
 
     public void leaveStreet(Vehicle v) {
         this.vehiclesOnStreet.get(v.getCurrentLaneId()).remove(v);
-        System.out.println(this + " Veh" + v.getPosition());
     }
 
     public Vehicle getNextVehicle(Vehicle v) {

@@ -229,7 +229,7 @@ public class Initial {
 
             if(Math.random()<0.5) {
                 if(y<500 && y % 2 == 0) {
-                vehicles.add(new Vehicle(start1,"V"+y));
+             //   vehicles.add(new Vehicle(start1,"V"+y));
 
                 }
                 y++;
