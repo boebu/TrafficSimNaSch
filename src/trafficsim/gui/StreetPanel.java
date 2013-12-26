@@ -28,8 +28,13 @@ public class StreetPanel extends JLayeredPane {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        // SET PANEL BACKGROUND COLOR
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
+
+        // ADD AUTHOR TEXT
+        g.setColor(Color.WHITE);
+        g.drawString("Traffic Sim by Boban Glisovic and Fabian Hutzli", 0, 10);
 
         // DRAW INTERSECTIONS
         g.setColor(Color.RED);
