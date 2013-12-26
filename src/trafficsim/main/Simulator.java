@@ -23,8 +23,6 @@ public class Simulator {
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     // CAR RATIO < 0, <= 1
     private static double NEW_CAR_RATIO = 0.8;
-    // ITERATE TICK <= 5 <= 20
-    private static int INTERSECTION_ITERATE_TICK = 10;
     StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
     SimulatorView view = new SimulatorView();
@@ -188,11 +186,13 @@ public class Simulator {
     }
 
     public int getNewIntersectionIterate() {
-        return INTERSECTION_ITERATE_TICK;
+        return intersections.get(0).getInteratePhasesTick();
     }
 
     public void setNewIntersectionIterate(int n) {
-        INTERSECTION_ITERATE_TICK = n;
+        for(Intersection i: intersections) {
+            i.setInteratePhasesTick(n);
+        }
     }
 
     public void tick() {
@@ -204,15 +204,9 @@ public class Simulator {
             System.out.println("VEhicle removed: " + vdel);
         }
 
-        if(x == INTERSECTION_ITERATE_TICK) {
-            for(Intersection i: intersections) {
-                i.iteratePhase();
 
-            }
-            // vehicles.add(new Vehicle(st1,"VX"));
-            x = 0;
-        } else {
-            x++;
+        for(Intersection i: intersections) {
+            i.iteratePhase();
         }
 
         for(Vehicle vehicle : vehicles){

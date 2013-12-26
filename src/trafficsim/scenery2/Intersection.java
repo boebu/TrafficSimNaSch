@@ -21,8 +21,11 @@ public class Intersection {
     private ArrayList<Street> sortedOutgoingStreets;
     private ArrayList<IntersectionStreet> StreetPhases = new ArrayList<IntersectionStreet>();
     private Random random = new Random();
+    private int interatePhasesTick = 10;
+    private int ticks = 0;
     private int maxPhase;
     private int phase;
+    private boolean delayed = false;
     private IntersectionController intersectionController;
 
     public Intersection(int x, int y) {
@@ -37,11 +40,31 @@ public class Intersection {
         return RADIUS;
     }
 
+    public int getInteratePhasesTick() {
+        return interatePhasesTick;
+    }
+
+    public void setInteratePhasesTick(int interatePhasesTick) {
+        this.interatePhasesTick = interatePhasesTick;
+    }
+
     public void iteratePhase() {
-       if(this.phase < this.maxPhase) {
-           this.phase++;
+       if(this.ticks >= this.interatePhasesTick || this.delayed) {
+           // need to check if intersection is empty
+           System.out.println(this + " " + isIntersectionEmpty());
+           if(isIntersectionEmpty()) {
+               if(this.phase < this.maxPhase) {
+                   this.phase++;
+               } else {
+                   this.phase = 0;
+               }
+               this.ticks = 0;
+               this.delayed = false;
+           } else {
+               this.delayed = true;
+           }
        } else {
-           this.phase = 0;
+           this.ticks++;
        }
 
        System.out.println("PHASE " + this.phase);
@@ -236,6 +259,15 @@ public class Intersection {
         double ua = ((b2.x-b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x)) / denom;
         double ub = ((a2.x-a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x)) / denom;
         return ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1;
+    }
+
+    private boolean isIntersectionEmpty() {
+        for(IntersectionStreet is: StreetPhases) {
+            if(is.getVehicles().size() != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
