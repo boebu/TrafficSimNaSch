@@ -25,8 +25,8 @@ public class SimulatorView {
         simFrame.setSize(FRAME_SIZE);
         simFrame.setVisible(true);
 
-        simFrame.add(streetPanel);
         simFrame.add(vehiclePanel);
+        simFrame.add(streetPanel);
 
     }
 }

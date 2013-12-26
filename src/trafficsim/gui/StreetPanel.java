@@ -28,6 +28,9 @@ public class StreetPanel extends JLayeredPane {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        this.setOpaque(true);
+        this.setBackground(Color.BLACK);
+
         // DRAW INTERSECTIONS
         g.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(1));
