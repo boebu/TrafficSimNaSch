@@ -45,7 +45,6 @@ public class ControlPanel {
         JSlider s = new JSlider(100,4000);
         s.setMajorTickSpacing(1000);
         s.setMinorTickSpacing(100);
-        s.setInverted(true);
         s.setValue(1000);
         s.setSnapToTicks(true);
         JLabel elapsedText = new JLabel("Elapsed Time:");
@@ -103,7 +102,6 @@ public class ControlPanel {
             public void stateChanged(ChangeEvent e) {
                 JSlider source = (JSlider) e.getSource();
                 Sim.timer.setDelay(source.getValue());
-                System.out.println(Sim.timer.getDelay());
                 double value = 1000 / (double) source.getValue();
                 value = Math.round(value * 100);
                 value = value/100;
