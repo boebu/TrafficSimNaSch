@@ -21,7 +21,9 @@ public class Simulator {
     private static ArrayList<Intersection> intersections = new ArrayList<Intersection>();
     private static ArrayList<Street> streets = new ArrayList<Street>();
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    // CAR RATIO < 0, <= 1
     private static double NEW_CAR_RATIO = 0.8;
+    // ITERATE TICK <= 5 <= 20
     private static int INTERSECTION_ITERATE_TICK = 10;
     StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
@@ -46,41 +48,41 @@ public class Simulator {
 
         // STREETS
 
-        Street st1 = new Street(5,2,"S1");
+        Street st1 = new Street(5,3,"S1");
         streets.add(st1);
-        Street st2 = new Street(5,2,"S2");
+        Street st2 = new Street(5,3,"S2");
         streets.add(st2);
-        Street st3 = new Street(5,2,"S3");
+        Street st3 = new Street(5,3,"S3");
         streets.add(st3);
-        Street st4 = new Street(5,2,"S4");
+        Street st4 = new Street(5,3,"S4");
         streets.add(st4);
-        Street st5 = new Street(5,2,"S5");
+        Street st5 = new Street(5,3,"S5");
         streets.add(st5);
-        Street st6 = new Street(5,2,"S6");
+        Street st6 = new Street(5,3,"S6");
         streets.add(st6);
-        Street st7 = new Street(5,2,"S7");
+        Street st7 = new Street(5,3,"S7");
         streets.add(st7);
-        Street st8 = new Street(5,2,"S8");
+        Street st8 = new Street(5,3,"S8");
         streets.add(st8);
-        Street st9 = new Street(5,2,"S9");
+        Street st9 = new Street(5,3,"S9");
         streets.add(st9);
-        Street st10 = new Street(5,2,"S10");
+        Street st10 = new Street(5,3,"S10");
         streets.add(st10);
-        Street st11 = new Street(5,2,"S11");
+        Street st11 = new Street(5,3,"S11");
         streets.add(st11);
-        Street st12 = new Street(5,2,"S12");
+        Street st12 = new Street(5,3,"S12");
         streets.add(st12);
-        Street st13 = new Street(5,2,"S13");
+        Street st13 = new Street(5,3,"S13");
         streets.add(st13);
-        Street st14 = new Street(5,2,"S14");
+        Street st14 = new Street(5,3,"S14");
         streets.add(st14);
-        Street st15 = new Street(5,2,"S15");
+        Street st15 = new Street(5,3,"S15");
         streets.add(st15);
-        Street st16 = new Street(5,2,"S16");
+        Street st16 = new Street(5,3,"S16");
         streets.add(st16);
-        Street start1 = new Street(5,2,"Start1");
+        Street start1 = new Street(5,3,"Start1");
         streets.add(start1);
-        Street end1 = new Street(5,2,"End1");
+        Street end1 = new Street(5,3,"End1");
         streets.add(end1);
 
         // STREET <> INTERSECTIONS
@@ -183,6 +185,14 @@ public class Simulator {
 
     public void setNewCarRatio(double n) {
         NEW_CAR_RATIO = n;
+    }
+
+    public int getNewIntersectionIterate() {
+        return INTERSECTION_ITERATE_TICK;
+    }
+
+    public void setNewIntersectionIterate(int n) {
+        INTERSECTION_ITERATE_TICK = n;
     }
 
     public void tick() {

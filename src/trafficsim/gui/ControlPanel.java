@@ -47,6 +47,7 @@ public class ControlPanel {
         s.setMinorTickSpacing(100);
         s.setValue(1000);
         s.setSnapToTicks(true);
+        s.setSnapToTicks(true);
         JLabel elapsedText = new JLabel("Elapsed Time:");
         elapsed.setText(new SimpleDateFormat("hh:mm:ss z").format(new Date(0)));
         speedText.setText("Speed (" + 1000 / (double) s.getValue() + "x):");
@@ -55,21 +56,32 @@ public class ControlPanel {
         speedPanel.add(elapsedText);
         speedPanel.add(elapsed);
 
-        // VEHICLE PANEL
-        JPanel vehiclePanel = new JPanel(new GridLayout(1,2));
+        // VEHICLE & INTERSECTION PANEL
+        JPanel viPanel = new JPanel(new GridLayout(2,2));
         JLabel vehicleText = new JLabel("Vehicle Ratio:");
         JSlider v = new JSlider(0,10);
         v.setMajorTickSpacing(1);
         v.setPaintTicks(true);
         v.setValue((int) (Sim.simulator.getNewCarRatio() * 10));
         v.setPaintLabels(true);
-        vehiclePanel.add(vehicleText);
-        vehiclePanel.add(v);
+        viPanel.add(vehicleText);
+        viPanel.add(v);
+        JLabel intersectionText = new JLabel("Intersection Interate (Ticks):");
+        JSlider i = new JSlider(5,20);
+        i.setMajorTickSpacing(5);
+        i.setMinorTickSpacing(1);
+        i.setPaintTicks(true);
+        i.setSnapToTicks(true);
+        i.setValue(Sim.simulator.getNewIntersectionIterate());
+        i.setPaintLabels(true);
+        viPanel.add(intersectionText);
+        viPanel.add(i);
 
         // ADD PANELS TO FRAME
         controlFrame.add(buttonPanel, BorderLayout.NORTH);
         controlFrame.add(speedPanel, BorderLayout.CENTER);
-        controlFrame.add(vehiclePanel, BorderLayout.SOUTH);
+        controlFrame.add(viPanel, BorderLayout.SOUTH);
+
         controlFrame.setVisible(true);
 
 
@@ -117,6 +129,13 @@ public class ControlPanel {
             }
         });
 
+        i.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                Sim.simulator.setNewIntersectionIterate(source.getValue());
+            }
+        });
 
     }
 

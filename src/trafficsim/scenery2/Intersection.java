@@ -89,7 +89,7 @@ public class Intersection {
         int tmpphase = 0;
         for(Street incoming:this.incomingStreets.values()) {
             for(Street outgoing: this.routing.get(incoming).values()) {
-                IntersectionStreet is = new IntersectionStreet(5,2,incoming.getId() + outgoing.getId());
+                IntersectionStreet is = new IntersectionStreet(5,incoming.getNumOfLanes(),incoming.getId() + outgoing.getId());
                 is.initStreet(incoming.getEnd(),outgoing.getStart());
                 for(IntersectionStreet tmpis: StreetPhases) {
                     if(!checkStreetCollision(tmpis,is) || (tmpis.getEnd() == is.getStart() && tmpis.getStart() == tmpis.getEnd())) {
