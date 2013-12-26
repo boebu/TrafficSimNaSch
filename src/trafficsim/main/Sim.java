@@ -40,7 +40,7 @@ public class Sim {
         Sim.simulator.initScenery();
         Sim.simulator.initGUI();
                    // Sim.DEFAULT_INTERVAL
-        timer = new Timer(100, new ActionListener() {
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 elapsedTimeS += DEFAULT_INTERVAL/timer.getDelay();
