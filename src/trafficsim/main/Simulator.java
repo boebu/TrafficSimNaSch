@@ -21,7 +21,7 @@ public class Simulator {
     private static ArrayList<Intersection> intersections = new ArrayList<Intersection>();
     private static ArrayList<Street> streets = new ArrayList<Street>();
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-    private static double NEW_CAR_RATIO = 0.8;
+    private static double NEW_CAR_RATIO = 0.2;
     private static int INTERSECTION_ITERATE_TICK = 10;
     StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
