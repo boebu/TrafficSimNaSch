@@ -64,6 +64,7 @@ public class ControlPanel {
         v.setPaintTicks(true);
         v.setValue((int) (Sim.simulator.getNewCarRatio() * 10));
         v.setPaintLabels(true);
+        v.setSnapToTicks(true);
         viPanel.add(vehicleText);
         viPanel.add(v);
         JLabel intersectionText = new JLabel("Intersection Interate (Ticks):");

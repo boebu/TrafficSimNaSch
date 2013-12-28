@@ -39,6 +39,7 @@ public class Simulator {
         }
     }
 
+    // SCENERY1, set value 1 in initScenery in Sim.java
     private void scenery1(){
         // INTERSECTIONS
         Intersection i1 = new Intersection(600,600);
@@ -165,6 +166,7 @@ public class Simulator {
         i6.initRouting();
     }
 
+    // SCENERY1, set value 2 in initScenery in Sim.java
     private void scenery2(){
         // INTERSECTIONS
         Intersection i1 = new Intersection(200,100);
@@ -175,7 +177,7 @@ public class Simulator {
         intersections.add(i3);
         Intersection i4 = new Intersection(600,600);
         intersections.add(i4);
-        Intersection i5 = new Intersection(800,600);
+        Intersection i5 = new Intersection(900,700);
         intersections.add(i5);
         Intersection i6 = new Intersection(800,400);
         intersections.add(i6);
@@ -346,58 +348,38 @@ public class Simulator {
         i9.initRouting();
     }
 
+    // SCENERY1, set value 3 in initScenery in Sim.java
     private void scenery3(){
         // INTERSECTIONS
-
-        Intersection i1 = new Intersection(600,600);
+        Intersection i1 = new Intersection(250,250);
         intersections.add(i1);
-        Intersection i2 = new Intersection(300,600);
+        Intersection i2 = new Intersection(350,350);
         intersections.add(i2);
-        Intersection i3 = new Intersection(100,100);
+        Intersection i3 = new Intersection(600,200);
         intersections.add(i3);
-        Intersection i4 = new Intersection(600,100);
+        Intersection i4 = new Intersection(600,600);
         intersections.add(i4);
-        Intersection i5 = new Intersection(800,400);
-        intersections.add(i5);
-        Intersection i6 = new Intersection(1000,50);
-        intersections.add(i6);
 
         // STREETS
-        Street st1 = new Street(5,3,"S1");
+        Street st1 = new Street(5,4,"S1");
         streets.add(st1);
-        Street st2 = new Street(5,3,"S2");
+        Street st2 = new Street(5,4,"S2");
         streets.add(st2);
-        Street st3 = new Street(5,3,"S3");
+        Street st3 = new Street(5,4,"S3");
         streets.add(st3);
-        Street st4 = new Street(5,3,"S4");
+        Street st4 = new Street(5,4,"S4");
         streets.add(st4);
-        Street st5 = new Street(5,3,"S5");
+        Street st5 = new Street(5,4,"S5");
         streets.add(st5);
-        Street st6 = new Street(5,3,"S6");
+        Street st6 = new Street(5,4,"S6");
         streets.add(st6);
-        Street st7 = new Street(5,3,"S7");
+        Street st7 = new Street(5,4,"S7");
         streets.add(st7);
-        Street st8 = new Street(5,3,"S8");
+        Street st8 = new Street(5,4,"S8");
         streets.add(st8);
-        Street st9 = new Street(5,3,"S9");
-        streets.add(st9);
-        Street st10 = new Street(5,3,"S10");
-        streets.add(st10);
-        Street st11 = new Street(5,3,"S11");
-        streets.add(st11);
-        Street st12 = new Street(5,3,"S12");
-        streets.add(st12);
-        Street st13 = new Street(5,3,"S13");
-        streets.add(st13);
-        Street st14 = new Street(5,3,"S14");
-        streets.add(st14);
-        Street st15 = new Street(5,3,"S15");
-        streets.add(st15);
-        Street st16 = new Street(5,3,"S16");
-        streets.add(st16);
-        Street start1 = new Street(5,3,"Start1");
+        Street start1 = new Street(5,4,"Start1");
         streets.add(start1);
-        Street end1 = new Street(5,3,"End1");
+        Street end1 = new Street(5,4,"End1");
         streets.add(end1);
 
         // STREET <> INTERSECTIONS
@@ -415,62 +397,34 @@ public class Simulator {
         st3.resetStartEndPoint();
         st4.resetStartEndPoint();
 
-        i3.addOutgoingStreet(i4, st5);
-        i4.addOutgoingStreet(i3, st6);
-        st5.initStreet(i3.getPosition(),i4.getPosition());
-        st6.initStreet(i4.getPosition(),i3.getPosition());
+        i2.addOutgoingStreet(i4, st5);
+        i4.addOutgoingStreet(i2, st6);
+        st5.initStreet(i2.getPosition(),i4.getPosition());
+        st6.initStreet(i4.getPosition(),i2.getPosition());
         st5.resetStartEndPoint();
         st6.resetStartEndPoint();
 
-        i4.addOutgoingStreet(i1, st7);
-        i1.addOutgoingStreet(i4, st8);
-        st7.initStreet(i4.getPosition(),i1.getPosition());
-        st8.initStreet(i1.getPosition(),i4.getPosition());
+        i3.addOutgoingStreet(i4, st7);
+        i4.addOutgoingStreet(i3, st8);
+        st7.initStreet(i3.getPosition(),i4.getPosition());
+        st8.initStreet(i4.getPosition(),i3.getPosition());
         st7.resetStartEndPoint();
         st8.resetStartEndPoint();
 
-        i4.addOutgoingStreet(i5,st9);
-        i5.addOutgoingStreet(i1,st10);
-        i5.addOutgoingStreet(i4,st11);
-        i1.addOutgoingStreet(i5,st12);
-        st9.initStreet(i4.getPosition(), i5.getPosition());
-        st10.initStreet(i5.getPosition(),i1.getPosition());
-        st11.initStreet(i5.getPosition(),i4.getPosition());
-        st12.initStreet(i1.getPosition(),i5.getPosition());
-        st9.resetStartEndPoint();
-        st10.resetStartEndPoint();
-        st11.resetStartEndPoint();
-        st12.resetStartEndPoint();
-
-        i4.addOutgoingStreet(i6,st13);
-        i6.addOutgoingStreet(i4,st14);
-        i5.addOutgoingStreet(i6,st15);
-        i6.addOutgoingStreet(i5,st16);
-        st13.initStreet(i4.getPosition(),i6.getPosition());
-        st14.initStreet(i6.getPosition(),i4.getPosition());
-        st15.initStreet(i5.getPosition(),i6.getPosition());
-        st16.initStreet(i6.getPosition(),i5.getPosition());
-        st13.resetStartEndPoint();
-        st14.resetStartEndPoint();
-        st15.resetStartEndPoint();
-        st16.resetStartEndPoint();
-
-        Intersection istart = new Intersection(0,600);
-        istart.addOutgoingStreet(i2,start1);
-        start1.initStreet(istart.getPosition(),i2.getPosition());
+        Intersection istart = new Intersection(0,250);
+        istart.addOutgoingStreet(i1,start1);
+        start1.initStreet(istart.getPosition(),i1.getPosition());
         start1.resetStartEndPoint();
 
-        Intersection iend = new Intersection(1200,50);
-        i4.addOutgoingStreet(iend,end1);
-        end1.initStreet(i4.getPosition(),iend.getPosition());
+        Intersection iend = new Intersection(250,0);
+        i1.addOutgoingStreet(iend,end1);
+        end1.initStreet(i1.getPosition(),iend.getPosition());
         end1.resetStartEndPoint();
 
         i1.initRouting();
         i2.initRouting();
         i3.initRouting();
         i4.initRouting();
-        i5.initRouting();
-        i6.initRouting();
     }
 
     public void initGUI() {

@@ -37,7 +37,7 @@ public class Sim {
 
     public static void main(String args[]) {
         Sim.simulator = new Simulator();
-        Sim.simulator.initScenery(2);
+        Sim.simulator.initScenery(3);
         Sim.simulator.initGUI();
                    // Sim.DEFAULT_INTERVAL
         timer = new Timer(1000, new ActionListener() {
