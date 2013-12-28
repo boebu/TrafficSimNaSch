@@ -353,11 +353,11 @@ public class Simulator {
         // INTERSECTIONS
         Intersection i1 = new Intersection(250,250);
         intersections.add(i1);
-        Intersection i2 = new Intersection(350,350);
+        Intersection i2 = new Intersection(900,250);
         intersections.add(i2);
-        Intersection i3 = new Intersection(600,200);
+        Intersection i3 = new Intersection(900,700);
         intersections.add(i3);
-        Intersection i4 = new Intersection(600,600);
+        Intersection i4 = new Intersection(250,700);
         intersections.add(i4);
 
         // STREETS
@@ -379,8 +379,8 @@ public class Simulator {
         streets.add(st8);
         Street start1 = new Street(5,4,"Start1");
         streets.add(start1);
-        Street end1 = new Street(5,4,"End1");
-        streets.add(end1);
+        //Street end1 = new Street(5,4,"End1");
+        //streets.add(end1);
 
         // STREET <> INTERSECTIONS
         i1.addOutgoingStreet(i2, st1);
@@ -397,29 +397,30 @@ public class Simulator {
         st3.resetStartEndPoint();
         st4.resetStartEndPoint();
 
-        i2.addOutgoingStreet(i4, st5);
-        i4.addOutgoingStreet(i2, st6);
-        st5.initStreet(i2.getPosition(),i4.getPosition());
-        st6.initStreet(i4.getPosition(),i2.getPosition());
+        i3.addOutgoingStreet(i4, st5);
+        i4.addOutgoingStreet(i3, st6);
+        st5.initStreet(i3.getPosition(),i4.getPosition());
+        st6.initStreet(i4.getPosition(),i3.getPosition());
         st5.resetStartEndPoint();
         st6.resetStartEndPoint();
 
-        i3.addOutgoingStreet(i4, st7);
-        i4.addOutgoingStreet(i3, st8);
-        st7.initStreet(i3.getPosition(),i4.getPosition());
-        st8.initStreet(i4.getPosition(),i3.getPosition());
+        i4.addOutgoingStreet(i1, st7);
+        i1.addOutgoingStreet(i4, st8);
+        st7.initStreet(i4.getPosition(),i1.getPosition());
+        st8.initStreet(i1.getPosition(),i4.getPosition());
         st7.resetStartEndPoint();
         st8.resetStartEndPoint();
+
 
         Intersection istart = new Intersection(0,250);
         istart.addOutgoingStreet(i1,start1);
         start1.initStreet(istart.getPosition(),i1.getPosition());
         start1.resetStartEndPoint();
 
-        Intersection iend = new Intersection(250,0);
+        /*Intersection iend = new Intersection(250,0);
         i1.addOutgoingStreet(iend,end1);
         end1.initStreet(i1.getPosition(),iend.getPosition());
-        end1.resetStartEndPoint();
+        end1.resetStartEndPoint();*/
 
         i1.initRouting();
         i2.initRouting();
