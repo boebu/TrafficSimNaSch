@@ -1,7 +1,6 @@
 package trafficsim.gui;
 
 import trafficsim.main.Sim;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -20,10 +19,12 @@ import java.util.Date;
  */
 public class ControlPanel {
 
+    // Set Frame Size
     private static final Dimension FRAME_SIZE = new Dimension(300, 300);
     private static JLabel elapsed = new JLabel("Elapsed Time");
 
     public static void init() {
+        // Create a new JFrame
         JFrame controlFrame = new JFrame("Traffic Simulator Control");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         controlFrame.pack();
@@ -83,9 +84,10 @@ public class ControlPanel {
         controlFrame.add(speedPanel, BorderLayout.CENTER);
         controlFrame.add(viPanel, BorderLayout.SOUTH);
 
+        // Show Control Frame
         controlFrame.setVisible(true);
 
-
+        // Button Action Listeners
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,6 +112,7 @@ public class ControlPanel {
             }
         });
 
+        // Slider Actions Listeners
         s.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -140,6 +143,7 @@ public class ControlPanel {
 
     }
 
+    // Update Elapsed Label
     public static void updateTime() {
         elapsed.setText(new SimpleDateFormat("hh:mm:ss").format(new Date((long)Sim.getElapsedTimeS()*1000)));
     }

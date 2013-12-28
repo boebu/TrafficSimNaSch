@@ -27,6 +27,7 @@ public class VehiclePanel extends JLayeredPane {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        // DRAW VEHICLE, COLOR DEPENDS ON SPEED
         for(Vehicle vehicle : vehicles){
 
             switch(vehicle.getSpeed()) {
@@ -44,10 +45,10 @@ public class VehiclePanel extends JLayeredPane {
                     break;
             }
             g2d.fillOval((int) vehicle.getPosition().x, (int) vehicle.getPosition().y, vehicleSize, vehicleSize);
-            //g2d.rotate(vehicle.getDirection().angle(defvector));
         }
     }
 
+    // SET VEHICLES
     public void setVehicles(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
 
