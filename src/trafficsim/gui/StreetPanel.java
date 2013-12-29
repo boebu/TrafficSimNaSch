@@ -1,15 +1,10 @@
 package trafficsim.gui;
 
-
-import trafficsim.main.Sim;
 import trafficsim.scenery2.Direction;
 import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +14,9 @@ import java.util.ArrayList;
  * Time: 14:48
  * To change this template use File | Settings | File Templates.
  */
+
 public class StreetPanel extends JLayeredPane {
+    // ARRAY LISTS FOR INTERSECTIONS AND STREETS
     private ArrayList<Intersection> intersections = new ArrayList<Intersection>();
     private ArrayList<Street> streets = new ArrayList<Street>();
 
@@ -36,7 +33,7 @@ public class StreetPanel extends JLayeredPane {
         g.setColor(Color.WHITE);
         g.drawString("Traffic Sim by Boban Glisovic and Fabian Hutzli", 0, 10);
 
-        // DRAW INTERSECTIONS
+        // DRAW INTERSECTIONS CONNECTION LINES (RED)
         g.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(1));
 
@@ -55,19 +52,19 @@ public class StreetPanel extends JLayeredPane {
         g2d.setStroke(new BasicStroke(1));
 
         for(Street street : streets){
-
             for(int i = 0; i <= street.getNumOfLanes(); i++){
                 g.drawLine(street.getLaneStart(i).x, street.getLaneStart(i).y, street.getLaneEnd(i).x, street.getLaneEnd(i).y);
             }
             g.drawLine(street.getStart().x, street.getStart().y, street.getEnd().x, street.getEnd().y);
         }
-
     }
 
+    // SET INTERSECTIONS
     public void setIntersections(ArrayList<Intersection> intersections) {
         this.intersections = intersections;
     }
 
+    // SET STREETS
     public void setStreets(ArrayList<Street> streets){
         this.streets = streets;
     }
