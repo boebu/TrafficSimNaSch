@@ -51,7 +51,6 @@ public class Intersection {
     public void iteratePhase() {
        if(this.ticks >= this.interatePhasesTick || this.delayed) {
            // need to check if intersection is empty
-           System.out.println(this + " " + isIntersectionEmpty());
            if(isIntersectionEmpty()) {
                if(this.phase < this.maxPhase) {
                    this.phase++;
@@ -61,6 +60,12 @@ public class Intersection {
                this.ticks = 0;
                this.delayed = false;
            } else {
+               System.out.println("VEHICLES ON LANE");
+               for(IntersectionStreet is: StreetPhases) {
+                   for(Vehicle v: is.getVehicles()) {
+                       System.out.println(v.getPosition());
+                   }
+               }
                this.delayed = true;
            }
        } else {

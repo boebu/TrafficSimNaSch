@@ -8,6 +8,7 @@ import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Street;
 import trafficsim.scenery2.Vehicle;
 
+import javax.vecmath.Vector2d;
 import java.util.ArrayList;
 
 /**
