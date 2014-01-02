@@ -4,6 +4,7 @@ package trafficsim.scenery2;
 import javax.vecmath.Vector2d;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -100,6 +101,18 @@ public class Street implements Comparable<Street>{
     public void enterStreet(Vehicle v) {
         // need direction here for correct lane selection
         this.vehiclesOnStreet.get(v.getCurrentLaneId()).add(v);
+        Vector2d s = new Vector2d(this.getLaneStart(v.getCurrentLaneId()).x,this.getLaneStart(v.getCurrentLaneId()).y);
+        Vector2d vthis = new Vector2d(v.getPosition());
+        Vehicle ne = this.getNextVehicle(v);
+        vthis.sub(s);
+        if(ne != null) {
+            Vector2d vnext = new Vector2d(ne.getPosition());
+            vnext.sub(s);
+            if(vthis.length() > vnext.length()) {
+                System.out.println("FAIL");
+            }
+        }
+
     }
 
     public void leaveStreet(Vehicle v) {

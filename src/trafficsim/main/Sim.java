@@ -4,6 +4,10 @@ package trafficsim.main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,8 +40,24 @@ public class Sim {
     }
 
     public static void main(String args[]) {
+
+        Logger logger = Logger.getLogger("Debug");
+        FileHandler fh;
+
+        try {
+            fh = new FileHandler("/Users/boebu/debug.log");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            logger.info("Test 1");
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
         Sim.simulator = new Simulator();
-        Sim.simulator.initScenery(3);
+        Sim.simulator.initScenery(2);
         Sim.simulator.initGUI();
                    // Sim.DEFAULT_INTERVAL
         timer = new Timer(1000, new ActionListener() {
