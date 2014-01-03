@@ -354,11 +354,11 @@ public class Simulator {
         // INTERSECTIONS
         Intersection i1 = new Intersection(250,250);
         intersections.add(i1);
-        Intersection i2 = new Intersection(900,250);
+        Intersection i2 = new Intersection(700,250);
         intersections.add(i2);
-        Intersection i3 = new Intersection(900,700);
+        Intersection i3 = new Intersection(700,600);
         intersections.add(i3);
-        Intersection i4 = new Intersection(250,700);
+        Intersection i4 = new Intersection(250,600);
         intersections.add(i4);
 
         // STREETS
@@ -511,6 +511,7 @@ public class Simulator {
         }
         vehicles.clear();
     }
+
 
 
 }

@@ -2,6 +2,7 @@ package trafficsim.scenery2;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,7 +39,7 @@ public class Vehicle {
 
 
 
-        s.enterStreet(this);
+
         this.direction = new Vector2d(s.getDirection());
         this.direction.normalize();
         this.speed = 3;
@@ -47,6 +48,7 @@ public class Vehicle {
         System.out.println("LANEID:" + this.laneId);
 
         this.position = new Vector2d((s.getLaneStart(this.laneId)).getX(),s.getLaneStart(this.laneId).getY());
+        s.enterStreet(this);
         System.out.println("POS: " +this.position);
     }
 
@@ -209,7 +211,9 @@ public class Vehicle {
             maxEndPoint = new Vector2d(next.getPosition());
             maxEndPoint.sub(this.position);
             double len = maxEndPoint.length();
-            maxEndPoint.normalize();
+            if(len > 0) {
+                maxEndPoint.normalize();
+            }
             maxEndPoint.scale(len-VEHICLE_LENGTH);
             if(maxEndPoint.length() < maxVehicleMove) {
                 decelerate(this.speed - (int)Math.floor(maxEndPoint.length()/SPEEDMULTIPLIER));
@@ -218,6 +222,26 @@ public class Vehicle {
             this.newPos.scale(this.speed * SPEEDMULTIPLIER);
             this.newPos.add(this.position);
         }
+
+        Vector2d s;
+        Vector2d e;
+        if(this.changeStreet) {
+            s = new Vector2d(this.nextStreet.getLaneStart(this.laneId).x,this.nextStreet.getLaneStart(this.laneId).y);
+            e = new Vector2d(this.nextStreet.getLaneEnd(this.laneId).x,this.nextStreet.getLaneEnd(this.laneId).y);
+        } else {
+            s = new Vector2d(this.currentStreet.getLaneStart(this.laneId).x,this.currentStreet.getLaneStart(this.laneId).y);
+            e = new Vector2d(this.currentStreet.getLaneEnd(this.laneId).x,this.currentStreet.getLaneEnd(this.laneId).y);
+        }
+        //debugging puroposes
+        Vector2d x = new Vector2d(this.newPos);
+        e.sub(s);
+        x.sub(s);
+        if(x.length() > e.length()) {
+            System.out.println("FAIlHOCH10");
+        }
+
+
+
 
     }
 
@@ -251,6 +275,7 @@ public class Vehicle {
         } else if(this.speed > 5) {
             System.out.println("BRK");
         }
+
 
     }
 
