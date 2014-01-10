@@ -23,6 +23,7 @@ public class ControlPanel {
     private static final Dimension FRAME_SIZE = new Dimension(300, 300);
     private static JLabel elapsed = new JLabel("Elapsed Time");
 
+    // Initialize
     public static void init() {
         // Create a new JFrame
         JFrame controlFrame = new JFrame("Traffic Simulator Control");

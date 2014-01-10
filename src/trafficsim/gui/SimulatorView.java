@@ -10,6 +10,7 @@ import java.awt.*;
  * Time: 16:35
  * To change this template use File | Settings | File Templates.
  */
+
 public class SimulatorView {
 
     // Set Frame Size
