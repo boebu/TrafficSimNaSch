@@ -16,7 +16,10 @@ import java.util.ArrayList;
  */
 
 public class StreetPanel extends JLayeredPane {
-    // ARRAY LISTS FOR INTERSECTIONS AND STREETS
+    /*
+     * ARRAY LISTS FOR INTERSECTIONS AND STREETS
+     */
+
     private ArrayList<Intersection> intersections = new ArrayList<Intersection>();
     private ArrayList<Street> streets = new ArrayList<Street>();
 
@@ -25,15 +28,24 @@ public class StreetPanel extends JLayeredPane {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        // SET PANEL BACKGROUND COLOR
+        /*
+         * SET PANEL BACKGROUND COLOR
+         */
+
         this.setOpaque(true);
         this.setBackground(Color.BLACK);
 
-        // ADD AUTHOR TEXT
+        /*
+         * ADD AUTHOR TEXT
+         */
+
         g.setColor(Color.WHITE);
         g.drawString("Traffic Sim by Boban Glisovic and Fabian Hutzli", 0, 10);
 
-        // DRAW INTERSECTIONS CONNECTION LINES (RED)
+        /*
+         * DRAW INTERSECTIONS CONNECTION LINES (RED)
+         */
+
         g.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(1));
 
@@ -47,7 +59,10 @@ public class StreetPanel extends JLayeredPane {
             }
         }
 
-        // DRAW STREETS
+        /*
+         * DRAW STREETS
+         */
+
         g.setColor(Color.GRAY);
         g2d.setStroke(new BasicStroke(1));
 
@@ -59,12 +74,18 @@ public class StreetPanel extends JLayeredPane {
         }
     }
 
-    // SET INTERSECTIONS
+    /*
+     * SET INTERSECTIONS
+     */
+
     public void setIntersections(ArrayList<Intersection> intersections) {
         this.intersections = intersections;
     }
 
-    // SET STREETS
+    /*
+     * SET STREETS
+     */
+
     public void setStreets(ArrayList<Street> streets){
         this.streets = streets;
     }

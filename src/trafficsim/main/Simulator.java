@@ -24,7 +24,7 @@ public class Simulator {
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     // CAR RATIO < 0, <= 1
     private static double NEW_CAR_RATIO = 0.8;
-    StreetPanel streetPanel = new StreetPanel();
+    public StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
     SimulatorView view = new SimulatorView();
     ControlPanel controlPanel = new ControlPanel();
@@ -512,7 +512,9 @@ public class Simulator {
         vehicles.clear();
     }
 
-
-
+    public void resetStreet() {
+        streets.clear();
+        intersections.clear();
+    }
 }
 

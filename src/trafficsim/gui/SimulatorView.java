@@ -21,7 +21,10 @@ public class SimulatorView {
         streetPanel.setSize(FRAME_SIZE);
         vehiclePanel.setSize(FRAME_SIZE);
 
-        // Create Simulator Frame
+        /*
+         * CREATE SIMULATOR FRAME
+         */
+
         JFrame simFrame = new JFrame("Traffic Simulator");
         simFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simFrame.pack();
