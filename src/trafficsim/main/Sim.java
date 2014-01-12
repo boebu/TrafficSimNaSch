@@ -57,7 +57,7 @@ public class Sim {
 
 
         Sim.simulator = new Simulator();
-        Sim.simulator.initScenery(2);
+        Sim.simulator.initScenery(1);
         Sim.simulator.initGUI();
                    // Sim.DEFAULT_INTERVAL
         timer = new Timer(1000, new ActionListener() {
