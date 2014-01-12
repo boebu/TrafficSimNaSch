@@ -17,6 +17,7 @@ import java.util.Date;
  * Time: 2:33 AM
  * To change this template use File | Settings | File Templates.
  */
+
 public class ControlPanel {
 
     // Set Frame Size
@@ -25,106 +26,46 @@ public class ControlPanel {
 
     // Initialize
     public static void init() {
-        /*
-         * FRAME
-         */
-
+        // Frame
         JFrame controlFrame = new JFrame("Traffic Simulator Control");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         controlFrame.pack();
         controlFrame.setLocation(1200, 0);
         controlFrame.setSize(FRAME_SIZE);
 
-        /*
-         * CONTROL BUTTON PANEL
-         */
-
-        // Panel
+        // Panel (Start, Stop, Reset Buttons)
         JPanel buttonPanel = new JPanel(new GridLayout(3,1));
-        // Button
-        JButton start = new JButton("Start");
-        JButton stop = new JButton("Stop");
-        JButton reset = new JButton("Reset");
-        // Button -> Panel
-        buttonPanel.add(start);
-        buttonPanel.add(stop);
-        buttonPanel.add(reset);
+        JButton start = createButton("Start", buttonPanel);
+        JButton stop = createButton("Stop", buttonPanel);
+        JButton reset = createButton("Reset", buttonPanel);
 
-        /*
-         * SIMULATOR SPEED PANEL
-         */
-
+        // Panel (Time, Speed, Ratio, Iterate)
         JPanel sviPanel = new JPanel(new GridLayout(4,2));
-        final JLabel speedText = new JLabel();
-        JSlider s = new JSlider(100,4000);
-        s.setMajorTickSpacing(1000);
-        s.setMinorTickSpacing(100);
-        s.setValue(1000);
-        s.setSnapToTicks(true);
-        s.setSnapToTicks(true);
-        JLabel elapsedText = new JLabel("Elapsed Time:");
+        createText("Elapsed Time:", sviPanel);
         elapsed.setText(new SimpleDateFormat("hh:mm:ss z").format(new Date(0)));
-        speedText.setText("Speed (" + 1000 / (double) s.getValue() + "x):");
-        sviPanel.add(speedText);
-        sviPanel.add(s);
-        sviPanel.add(elapsedText);
         sviPanel.add(elapsed);
+        final JLabel speedText = createText("", sviPanel);
+        JSlider s = createSlider(100, 4000, 1000, 1000, 100, false, sviPanel);
+        speedText.setText("Speed (" + 1000 / (double) s.getValue() + "x):");
+        createText("Vehicle Ratio:", sviPanel);
+        JSlider v = createSlider(0, 10, (int) (Sim.simulator.getNewCarRatio() * 10), 1, 0, true, sviPanel);
+        createText("Intersection Iterate:", sviPanel);
+        JSlider i = createSlider(5, 20, Sim.simulator.getNewIntersectionIterate(), 5, 1, true, sviPanel);
 
-        /*
-         *  ADD VEHICLE & INTERSECTION TO PANEL
-         */
-
-        JLabel vehicleText = new JLabel("Vehicle Ratio:");
-        JSlider v = new JSlider(0,10);
-        v.setMajorTickSpacing(1);
-        v.setPaintTicks(true);
-        v.setValue((int) (Sim.simulator.getNewCarRatio() * 10));
-        v.setPaintLabels(true);
-        v.setSnapToTicks(true);
-        sviPanel.add(vehicleText);
-        sviPanel.add(v);
-        JLabel intersectionText = new JLabel("Intersection Interate (Ticks):");
-        JSlider i = new JSlider(5,20);
-        i.setMajorTickSpacing(5);
-        i.setMinorTickSpacing(1);
-        i.setPaintTicks(true);
-        i.setSnapToTicks(true);
-        i.setValue(Sim.simulator.getNewIntersectionIterate());
-        i.setPaintLabels(true);
-        sviPanel.add(intersectionText);
-        sviPanel.add(i);
-
-        /*
-         * VEHICLE & INTERSECTION PANEL
-         */
-
+        // Panel (Scenario Buttons)
         JPanel scenPanel = new JPanel(new GridLayout(1,3));
-        JButton scen1 = new JButton("Scenario 1");
-        JButton scen2 = new JButton("Scenario 2");
-        JButton scen3 = new JButton("Scenario 3");
-        // Button -> Panel
-        scenPanel.add(scen1);
-        scenPanel.add(scen2);
-        scenPanel.add(scen3);
+        JButton scen1 = createButton("Scenario 1", scenPanel);
+        JButton scen2 = createButton("Scenario 2", scenPanel);
+        JButton scen3 = createButton("Scenario 3", scenPanel);
 
-        /*
-         * ADD PANELS TO FRAME
-         */
-
+        // Add Panels to Frame
         controlFrame.add(buttonPanel, BorderLayout.NORTH);
         controlFrame.add(sviPanel, BorderLayout.CENTER);
         controlFrame.add(scenPanel, BorderLayout.SOUTH);
 
-        /*
-         * SHOW CONTROL FRAME
-         */
-
         controlFrame.setVisible(true);
 
-        /*
-         * BUTTON ACTION LISTENERS
-         */
-
+        // Button Listeners
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -151,50 +92,23 @@ public class ControlPanel {
         scen1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sim.timer.restart();
-                Sim.timer.stop();
-                Sim.resetElapsedTime();
-                elapsed.setText("0");
-                Sim.simulator.reset();
-                Sim.simulator.resetStreet();
-                Sim.setScenario(1);
-                Sim.simulator.streetPanel.repaint();
-                Sim.simulator.vehiclePanel.repaint();
+                loadScenario(1);
             }
         });
         scen2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sim.timer.restart();
-                Sim.timer.stop();
-                Sim.resetElapsedTime();
-                elapsed.setText("0");
-                Sim.simulator.reset();
-                Sim.simulator.resetStreet();
-                Sim.setScenario(2);
-                Sim.simulator.streetPanel.repaint();
-                Sim.simulator.vehiclePanel.repaint();
+                loadScenario(2);
             }
         });
         scen3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Sim.timer.restart();
-                Sim.timer.stop();
-                Sim.resetElapsedTime();
-                elapsed.setText("0");
-                Sim.simulator.reset();
-                Sim.simulator.resetStreet();
-                Sim.setScenario(3);
-                Sim.simulator.streetPanel.repaint();
-                Sim.simulator.vehiclePanel.repaint();
+                loadScenario(3);
             }
         });
 
-        /*
-         * Slider Actions Listeners
-         */
-
+        // Slider Listeners
         s.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -206,7 +120,6 @@ public class ControlPanel {
                 speedText.setText("Speed (" + value + "x):");
             }
         });
-
         v.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -214,7 +127,6 @@ public class ControlPanel {
                 Sim.simulator.setNewCarRatio((double) source.getValue() / 10);
             }
         });
-
         i.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -225,10 +137,48 @@ public class ControlPanel {
 
     }
 
-    /*
-     * UPDATE ELEMENT LABEL
-     */
+    // Create a new Text Label
+    private static JLabel createText(String text, JPanel panel){
+        JLabel label = new JLabel(text);
+        panel.add(label);
+        return label;
+    }
 
+    // Create a new Button
+    private static JButton createButton(String text, JPanel panel){
+        JButton button = new JButton(text);
+        panel.add(button);
+        return button;
+    }
+
+    // Create a new Slider
+    private static JSlider createSlider(int min, int max, int value, int majorTick, int minorTick, boolean labels, JPanel panel){
+        JSlider slider = new JSlider(min, max);
+        slider.setValue(value);
+        slider.setMajorTickSpacing(majorTick);
+        slider.setMinorTickSpacing(minorTick);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(labels);
+        slider.setSnapToTicks(true);
+        slider.setSnapToTicks(true);
+        panel.add(slider);
+        return slider;
+    }
+
+    // Load Scenario
+    public static void loadScenario(int scen){
+        Sim.timer.restart();
+        Sim.timer.stop();
+        Sim.resetElapsedTime();
+        elapsed.setText("0");
+        Sim.simulator.reset();
+        Sim.simulator.resetStreet();
+        Sim.setScenario(scen);
+        Sim.simulator.streetPanel.repaint();
+        Sim.simulator.vehiclePanel.repaint();
+    }
+
+    // Update Elapsed Label
     public static void updateTime() {
         elapsed.setText(new SimpleDateFormat("hh:mm:ss").format(new Date((long)Sim.getElapsedTimeS()*1000)));
     }
