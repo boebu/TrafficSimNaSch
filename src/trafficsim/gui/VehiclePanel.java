@@ -19,17 +19,15 @@ public class VehiclePanel extends JLayeredPane {
 
     @Override
     protected void paintComponent(Graphics g) {
+        // Vehicle Size 4 => 4*4px
         int vehicleSize = 4;
 
+        // Paint Component
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        /*
-         * DRAW VEHICLE, COLOR DEPENDS ON SPEED
-         */
-
+        // Draw Vehicles (Different Color for Vehicle Speed)
         for(Vehicle vehicle : vehicles){
-
             switch(vehicle.getSpeed()) {
                 case 0: g.setColor(new Color(255,0,0));
                     break;
@@ -48,13 +46,8 @@ public class VehiclePanel extends JLayeredPane {
         }
     }
 
-    /*
-     * SET VEHICLES
-     */
-
+    // Set Vehicles
     public void setVehicles(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }
-
-
 }
