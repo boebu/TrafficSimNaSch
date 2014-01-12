@@ -1,11 +1,7 @@
 package trafficsim.gui;
 
-import trafficsim.main.Sim;
-import trafficsim.scenery2.Intersection;
 import trafficsim.scenery2.Vehicle;
-
 import javax.swing.*;
-import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -16,6 +12,7 @@ import java.util.ArrayList;
  * Time: 14:48
  * To change this template use File | Settings | File Templates.
  */
+
 public class VehiclePanel extends JLayeredPane {
     private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     // --Commented out by Inspection (12/23/13 1:01 AM):private Vector2d defvector = new Vector2d(1,0);
@@ -27,7 +24,10 @@ public class VehiclePanel extends JLayeredPane {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        // DRAW VEHICLE, COLOR DEPENDS ON SPEED
+        /*
+         * DRAW VEHICLE, COLOR DEPENDS ON SPEED
+         */
+
         for(Vehicle vehicle : vehicles){
 
             switch(vehicle.getSpeed()) {
@@ -48,10 +48,12 @@ public class VehiclePanel extends JLayeredPane {
         }
     }
 
-    // SET VEHICLES
+    /*
+     * SET VEHICLES
+     */
+
     public void setVehicles(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
-
     }
 
 

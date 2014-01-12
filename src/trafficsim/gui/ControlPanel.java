@@ -20,28 +20,41 @@ import java.util.Date;
 public class ControlPanel {
 
     // Set Frame Size
-    private static final Dimension FRAME_SIZE = new Dimension(300, 300);
+    private static final Dimension FRAME_SIZE = new Dimension(500, 500);
     private static JLabel elapsed = new JLabel("Elapsed Time");
 
+    // Initialize
     public static void init() {
-        // Create a new JFrame
+        /*
+         * FRAME
+         */
+
         JFrame controlFrame = new JFrame("Traffic Simulator Control");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         controlFrame.pack();
         controlFrame.setLocation(1200, 0);
         controlFrame.setSize(FRAME_SIZE);
 
-        // CONTROL BUTTON PANEL
+        /*
+         * CONTROL BUTTON PANEL
+         */
+
+        // Panel
         JPanel buttonPanel = new JPanel(new GridLayout(3,1));
+        // Button
         JButton start = new JButton("Start");
         JButton stop = new JButton("Stop");
         JButton reset = new JButton("Reset");
+        // Button -> Panel
         buttonPanel.add(start);
         buttonPanel.add(stop);
         buttonPanel.add(reset);
 
-        // SIMULATOR SPEED PANEL
-        JPanel speedPanel = new JPanel(new GridLayout(2,2));
+        /*
+         * SIMULATOR SPEED PANEL
+         */
+
+        JPanel sviPanel = new JPanel(new GridLayout(4,2));
         final JLabel speedText = new JLabel();
         JSlider s = new JSlider(100,4000);
         s.setMajorTickSpacing(1000);
@@ -52,13 +65,15 @@ public class ControlPanel {
         JLabel elapsedText = new JLabel("Elapsed Time:");
         elapsed.setText(new SimpleDateFormat("hh:mm:ss z").format(new Date(0)));
         speedText.setText("Speed (" + 1000 / (double) s.getValue() + "x):");
-        speedPanel.add(speedText);
-        speedPanel.add(s);
-        speedPanel.add(elapsedText);
-        speedPanel.add(elapsed);
+        sviPanel.add(speedText);
+        sviPanel.add(s);
+        sviPanel.add(elapsedText);
+        sviPanel.add(elapsed);
 
-        // VEHICLE & INTERSECTION PANEL
-        JPanel viPanel = new JPanel(new GridLayout(2,2));
+        /*
+         *  ADD VEHICLE & INTERSECTION TO PANEL
+         */
+
         JLabel vehicleText = new JLabel("Vehicle Ratio:");
         JSlider v = new JSlider(0,10);
         v.setMajorTickSpacing(1);
@@ -66,8 +81,8 @@ public class ControlPanel {
         v.setValue((int) (Sim.simulator.getNewCarRatio() * 10));
         v.setPaintLabels(true);
         v.setSnapToTicks(true);
-        viPanel.add(vehicleText);
-        viPanel.add(v);
+        sviPanel.add(vehicleText);
+        sviPanel.add(v);
         JLabel intersectionText = new JLabel("Intersection Interate (Ticks):");
         JSlider i = new JSlider(5,20);
         i.setMajorTickSpacing(5);
@@ -76,18 +91,40 @@ public class ControlPanel {
         i.setSnapToTicks(true);
         i.setValue(Sim.simulator.getNewIntersectionIterate());
         i.setPaintLabels(true);
-        viPanel.add(intersectionText);
-        viPanel.add(i);
+        sviPanel.add(intersectionText);
+        sviPanel.add(i);
 
-        // ADD PANELS TO FRAME
+        /*
+         * VEHICLE & INTERSECTION PANEL
+         */
+
+        JPanel scenPanel = new JPanel(new GridLayout(1,3));
+        JButton scen1 = new JButton("Scenario 1");
+        JButton scen2 = new JButton("Scenario 2");
+        JButton scen3 = new JButton("Scenario 3");
+        // Button -> Panel
+        scenPanel.add(scen1);
+        scenPanel.add(scen2);
+        scenPanel.add(scen3);
+
+        /*
+         * ADD PANELS TO FRAME
+         */
+
         controlFrame.add(buttonPanel, BorderLayout.NORTH);
-        controlFrame.add(speedPanel, BorderLayout.CENTER);
-        controlFrame.add(viPanel, BorderLayout.SOUTH);
+        controlFrame.add(sviPanel, BorderLayout.CENTER);
+        controlFrame.add(scenPanel, BorderLayout.SOUTH);
 
-        // Show Control Frame
+        /*
+         * SHOW CONTROL FRAME
+         */
+
         controlFrame.setVisible(true);
 
-        // Button Action Listeners
+        /*
+         * BUTTON ACTION LISTENERS
+         */
+
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,8 +148,53 @@ public class ControlPanel {
                 Sim.simulator.vehiclePanel.repaint();
             }
         });
+        scen1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Sim.timer.restart();
+                Sim.timer.stop();
+                Sim.resetElapsedTime();
+                elapsed.setText("0");
+                Sim.simulator.reset();
+                Sim.simulator.resetStreet();
+                Sim.setScenario(1);
+                Sim.simulator.streetPanel.repaint();
+                Sim.simulator.vehiclePanel.repaint();
+            }
+        });
+        scen2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Sim.timer.restart();
+                Sim.timer.stop();
+                Sim.resetElapsedTime();
+                elapsed.setText("0");
+                Sim.simulator.reset();
+                Sim.simulator.resetStreet();
+                Sim.setScenario(2);
+                Sim.simulator.streetPanel.repaint();
+                Sim.simulator.vehiclePanel.repaint();
+            }
+        });
+        scen3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Sim.timer.restart();
+                Sim.timer.stop();
+                Sim.resetElapsedTime();
+                elapsed.setText("0");
+                Sim.simulator.reset();
+                Sim.simulator.resetStreet();
+                Sim.setScenario(3);
+                Sim.simulator.streetPanel.repaint();
+                Sim.simulator.vehiclePanel.repaint();
+            }
+        });
 
-        // Slider Actions Listeners
+        /*
+         * Slider Actions Listeners
+         */
+
         s.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -143,7 +225,10 @@ public class ControlPanel {
 
     }
 
-    // Update Elapsed Label
+    /*
+     * UPDATE ELEMENT LABEL
+     */
+
     public static void updateTime() {
         elapsed.setText(new SimpleDateFormat("hh:mm:ss").format(new Date((long)Sim.getElapsedTimeS()*1000)));
     }

@@ -1,6 +1,5 @@
 package trafficsim.main;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,16 +19,17 @@ public class Sim {
     public static Timer timer;
     public static int DEFAULT_INTERVAL = 1000;
     public static Simulator simulator;
-    public static int x = 0;
+    //public static int x = 0;
     private static double elapsedTimeS = 0;
     // 1s => 1s => 1s
     // 2x => 2s => 1/2s
     // 5x => 5s => 1/5s
     // 1/2x => 0.5s = 2s
+    private static int scenario = 1;
 
-    public Sim() {
+    /*public Sim() {
 
-    }
+    }*/
 
     public static double getElapsedTimeS() {
         return elapsedTimeS;
@@ -57,7 +57,7 @@ public class Sim {
 
 
         Sim.simulator = new Simulator();
-        Sim.simulator.initScenery(1);
+        Sim.simulator.initScenery(scenario);
         Sim.simulator.initGUI();
                    // Sim.DEFAULT_INTERVAL
         timer = new Timer(1000, new ActionListener() {
@@ -69,8 +69,9 @@ public class Sim {
             }
         });
         //timer.start();
-
     }
 
-
+    public static void setScenario(int s){
+        Sim.simulator.initScenery(s);
+    }
 }
