@@ -204,6 +204,10 @@ public class Street implements Comparable<Street>{
         }
     }
 
+    public int getMaxSpeed() {
+        return this.speedlimit;
+    }
+
     private Point getLanePoint(Point p, int laneId) {
        Vector2d tmpV = new Vector2d(this.orthogonal);
         tmpV.normalize();
