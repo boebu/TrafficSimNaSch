@@ -4,11 +4,10 @@ import trafficsim.gui.ControlPanel;
 import trafficsim.gui.SimulatorView;
 import trafficsim.gui.StreetPanel;
 import trafficsim.gui.VehiclePanel;
-import trafficsim.scenery2.Intersection;
-import trafficsim.scenery2.Street;
-import trafficsim.scenery2.Vehicle;
+import trafficsim.model.Intersection;
+import trafficsim.model.Street;
+import trafficsim.model.Vehicle;
 
-import javax.vecmath.Vector2d;
 import java.util.ArrayList;
 
 /**

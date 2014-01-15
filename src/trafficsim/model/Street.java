@@ -1,10 +1,9 @@
-package trafficsim.scenery2;
+package trafficsim.model;
 
 
 import javax.vecmath.Vector2d;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -186,22 +185,6 @@ public class Street implements Comparable<Street>{
 
     public Point getLaneEnd(int laneId) {
         return getLanePoint(this.end,laneId);
-    }
-
-    public int getLeftLane(int laneid) {
-        if(this.lanes-1 > laneid) {
-            return laneid+1;
-        } else {
-            return -1;  //equals error
-        }
-    }
-
-    public int getRightLane(int laneid) {
-        if(laneid>0) {
-            return laneid-1;
-        } else {
-            return -1; // equals error
-        }
     }
 
     public int getMaxSpeed() {

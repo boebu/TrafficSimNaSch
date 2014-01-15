@@ -3,11 +3,10 @@ package trafficsim.main;
 import trafficsim.gui.StreetPanel;
 import trafficsim.gui.SimulatorView;
 import trafficsim.gui.VehiclePanel;
-import trafficsim.scenery2.Intersection;
-import trafficsim.scenery2.Street;
-import trafficsim.scenery2.Vehicle;
+import trafficsim.model.Intersection;
+import trafficsim.model.Street;
+import trafficsim.model.Vehicle;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**

@@ -1,8 +1,6 @@
-package trafficsim.scenery2;
+package trafficsim.model;
 
 import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
