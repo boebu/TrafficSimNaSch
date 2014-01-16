@@ -1,4 +1,4 @@
-package trafficsim.scenery2;
+package trafficsim.model;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package trafficsim.scenery2;
+package trafficsim.model;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
@@ -26,7 +26,6 @@ public class Intersection {
     private int maxPhase;
     private int phase;
     private boolean delayed = false;
-    private IntersectionController intersectionController;
 
     public Intersection(int x, int y) {
         this.position = new Point(x,y);
@@ -34,10 +33,6 @@ public class Intersection {
         this.incomingStreets = new Hashtable<Intersection, Street>();
         this.sortedOutgoingStreets = new ArrayList<Street>();
         this.phase = 0;
-    }
-
-    public int getRadius() {
-        return RADIUS;
     }
 
     public int getInteratePhasesTick() {
@@ -73,35 +68,6 @@ public class Intersection {
        }
 
        System.out.println("PHASE " + this.phase);
-    }
-
-    public void sort() {
-//        Collections.sort(this.sortedOutgoingStreets, new Comparator<Street>() {
-//            @Override
-//            public int compare(Street o1, Street o2) {
-//                double result1 = Math.toDegrees(Math.atan2(o1.getDirection().x ,o1.getDirection().y));
-//                if(result1 < 0.0) {
-//                    result1 = 180-(180-Math.abs(result1));
-//                } else {
-//                    result1 = 180+(180-result1);
-//                }
-//                double result2 = Math.toDegrees(Math.atan2(o2.getDirection().x ,o2.getDirection().y));
-//                if(result2 < 0.0) {
-//                    result2 = 180-(180-Math.abs(result2));
-//                } else {
-//                    result2 = 180+(180-result2);
-//                }
-//                if(result1 > result2) {
-//                    return 1;
-//                } else if(result1 < result2) {
-//                    return -1;
-//                } else {
-//                    return 0;
-//                }
-//            }
-//        });
-        Collections.sort(sortedOutgoingStreets);
-
     }
 
     public void initRouting() {
@@ -141,12 +107,6 @@ public class Intersection {
         }
     }
 
-
-    public void setIntersectionController(IntersectionController ic) {
-        this.intersectionController = ic;
-        ic.setIntersection(this);
-    }
-
     public Collection<Street> getIncomingStreets() {
         return this.incomingStreets.values();
     }
@@ -182,40 +142,12 @@ public class Intersection {
         return routes;
     }
 
-//    public Street getLeftStreet(Street s) {
-//         Vector2d orth = new Vector2d(s.getDirection().y,s.getDirection().x);
-//
-//        Vector2d inv = new Vector2d(s.getDirection());
-//        inv.negate();
-//
-//        //System.out.println(s.getId()+ " (" + s.getDirection() +") orth( "+ orth + ") " + s.getDirection().equals(new Vector2d()) +" " + Math.toDegrees(orth.angle(s.getDirection())));
-//
-//        for(Street x:sortedOutgoingStreets) {
-//             Vector2d tmpv = x.getDirection();
-//             tmpv.add(s.getDirection());
-//            //System.out.println("ANG " + tmpv + " this " +x.getId() + " end " + x.getDirection() + " s2 " + s.getDirection());
-//
-//             System.out.println(x.getId()+ " (" + x.getDirection() +") orth( "+ orth + ") " + x.getDirection().equals(new Vector2d()) +" " + Math.toDegrees(orth.angle(tmpv)));
-//         }
-//        return s;
-//
-//
-//    }
-
     public Street getRoute(Street incoming, Direction dir) {
         return this.routing.get(incoming).get(dir);
     }
 
     public Point getPosition() {
         return this.position;
-    }
-
-    public Street getOutgoingStreet(Intersection i) {
-        return this.outgoingStreets.get(i);
-    }
-
-    public Street getIncomingStreet(Intersection i) {
-        return this.incomingStreets.get(i);
     }
 
     public void addOutgoingStreet(Intersection i, Street s) {
@@ -227,14 +159,6 @@ public class Intersection {
 
     protected void addIncomingStreet(Intersection i, Street s) {
        this.incomingStreets.put(i,s);
-    }
-
-    public Set<Intersection> getNextIntersections() {
-        return this.outgoingStreets.keySet();
-    }
-
-    public Set<Direction> getDirections(Street incoming) {
-        return this.routing.get(incoming).keySet();
     }
 
     public Direction getNewDirection(Street incoming) {

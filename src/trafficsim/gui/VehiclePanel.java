@@ -1,6 +1,6 @@
 package trafficsim.gui;
 
-import trafficsim.scenery2.Vehicle;
+import trafficsim.model.Vehicle;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;

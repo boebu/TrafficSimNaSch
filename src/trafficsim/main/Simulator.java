@@ -4,11 +4,10 @@ import trafficsim.gui.ControlPanel;
 import trafficsim.gui.SimulatorView;
 import trafficsim.gui.StreetPanel;
 import trafficsim.gui.VehiclePanel;
-import trafficsim.scenery2.Intersection;
-import trafficsim.scenery2.Street;
-import trafficsim.scenery2.Vehicle;
+import trafficsim.model.Intersection;
+import trafficsim.model.Street;
+import trafficsim.model.Vehicle;
 
-import javax.vecmath.Vector2d;
 import java.util.ArrayList;
 
 /**
@@ -368,11 +367,11 @@ public class Simulator {
         streets.add(st2);
         Street st3 = new Street(5,4,"S3");
         streets.add(st3);
-        Street st4 = new Street(5,4,"S4");
+        Street st4 = new Street(2,4,"S4");
         streets.add(st4);
-        Street st5 = new Street(5,4,"S5");
+        Street st5 = new Street(2,4,"S5");
         streets.add(st5);
-        Street st6 = new Street(5,4,"S6");
+        Street st6 = new Street(2,4,"S6");
         streets.add(st6);
         Street st7 = new Street(5,4,"S7");
         streets.add(st7);

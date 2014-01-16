@@ -1,8 +1,8 @@
 package trafficsim.gui;
 
-import trafficsim.scenery2.Direction;
-import trafficsim.scenery2.Intersection;
-import trafficsim.scenery2.Street;
+import trafficsim.model.Direction;
+import trafficsim.model.Intersection;
+import trafficsim.model.Street;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;

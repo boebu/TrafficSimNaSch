@@ -1,8 +1,6 @@
-package trafficsim.scenery2;
+package trafficsim.model;
 
 import javax.vecmath.Vector2d;
-import java.awt.*;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class Vehicle {
 
-    private static int MAX_SPEED = 5;
+    private int MAX_SPEED = 5;
     private static int SPEEDMULTIPLIER = 7;
     private static int VEHICLE_LENGTH = 5;
     private int laneId;
@@ -72,6 +70,7 @@ public class Vehicle {
         if(changeStreet) {
             this.currentStreet.leaveStreet(this);
             this.nextStreet.enterStreet(this);
+            MAX_SPEED = this.nextStreet.getMaxSpeed();
             this.currentStreet = this.nextStreet;
             this.direction = this.currentStreet.getDirection();
             this.changeStreet = false;
