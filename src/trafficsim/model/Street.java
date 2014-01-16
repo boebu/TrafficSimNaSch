@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class Street implements Comparable<Street>{
 
+    // instance variables
     private static int LANE_WIDTH=6;
     private static int INTERSECTION_CORRECTION=36;
     private int speedlimit;
@@ -27,6 +28,12 @@ public class Street implements Comparable<Street>{
     private String id;
     ArrayList<ArrayList<Vehicle>> vehiclesOnStreet;
 
+    /**
+     * creates a new Street Object
+     * @param speedlimit
+     * @param lanes
+     * @param id
+     */
     public Street(int speedlimit, int lanes, String id) {
         this.speedlimit = speedlimit;
         this.lanes = lanes;
@@ -39,32 +46,60 @@ public class Street implements Comparable<Street>{
         }
     }
 
+    /**
+     * initiate the street with a start and end point
+     * @param s
+     * @param e
+     */
     public void initStreet(Point s, Point e) {
         this.start = s;
         this.end = e;
         this.calculateDirection();
     }
 
+    /**
+     * gets the speedlimit of current Street
+     * @return speedlimit
+     */
     public int getSpeedlimit() {
         return this.speedlimit;
     }
 
+    /**
+     * gets the number of lanes
+     * @return NumberOfLanes
+     */
     public int getNumOfLanes() {
         return this.lanes;
     }
 
+    /**
+     * get the startpoint
+     * @return  point
+     */
     public Point getStart() {
         return this.start;
     }
 
+    /**
+     * get Street ID
+     * @return id
+     */
     public String getId() {
         return this.id;
     }
 
+    /**
+     * get EndPoint
+     * @return  endpoint
+     */
     public Point getEnd() {
         return this.end;
     }
 
+    /**
+     * calculates the Direction based on start and endpoint
+     */
     public void calculateDirection() {
         // define Direction Vector
         // define ortogonal Vector to Direction (90 Degree clockwise used for LanePoint Calculating
@@ -78,8 +113,10 @@ public class Street implements Comparable<Street>{
 
     }
 
+    /**
+     * resets start/end point necessary to get the space for intersections
+     */
     public void resetStartEndPoint() {
-
         // Reset Start / End Point to add some free Space for the Intersection (Intersection R=16)
         Vector2d newStart = new Vector2d(this.direction);
         newStart.scale(INTERSECTION_CORRECTION);
@@ -93,10 +130,18 @@ public class Street implements Comparable<Street>{
         this.end = new Point((int)newEnd.x,(int)newEnd.y);
     }
 
+    /**
+     * gets the vehicles current direction
+     * @return Direction
+     */
     public Vector2d getDirection() {
         return this.direction;
     }
 
+    /**
+     * enter street for vehicle
+     * @param v
+     */
     public void enterStreet(Vehicle v) {
         // need direction here for correct lane selection
         this.vehiclesOnStreet.get(v.getCurrentLaneId()).add(v);
@@ -107,17 +152,23 @@ public class Street implements Comparable<Street>{
         if(ne != null) {
             Vector2d vnext = new Vector2d(ne.getPosition());
             vnext.sub(s);
-            if(vthis.length() > vnext.length()) {
-                System.out.println("FAIL");
-            }
         }
 
     }
 
+    /**
+     * vehicle leaves street
+     * @param v
+     */
     public void leaveStreet(Vehicle v) {
         this.vehiclesOnStreet.get(v.getCurrentLaneId()).remove(v);
     }
 
+    /**
+     * get next vehicle on lane
+     * @param v
+     * @return Vehicle
+     */
     public Vehicle getNextVehicle(Vehicle v) {
         ArrayList<Vehicle> actualLane = this.vehiclesOnStreet.get(v.getCurrentLaneId());
         for(int i=0;i<actualLane.size();i++) {
@@ -133,6 +184,11 @@ public class Street implements Comparable<Street>{
         return null;
     }
 
+    /**
+     * get First Vehicle on Lane
+     * @param laneid
+     * @return Vehicle
+     */
     public Vehicle getFirstVehicle(int laneid) {
         int size = this.vehiclesOnStreet.get(laneid).size();
         try {
@@ -142,6 +198,10 @@ public class Street implements Comparable<Street>{
         }
     }
 
+    /**
+     * get streetlength
+     * @return streetLength
+     */
     public double getStreetLength() {
         Vector2d l = new Vector2d(this.end.x,this.end.y);
         l.sub(new Vector2d(this.start.x,this.end.y));
@@ -171,37 +231,60 @@ public class Street implements Comparable<Street>{
         }
     }
 
+    /**
+     * get intersection at the end of street
+     * @return Intersection
+     */
     public Intersection getNextIntersection() {
         return this.nextIntersection;
     }
 
+    /**
+     * set nextIntersection
+     * @param i
+     */
     public void setNextIntersection(Intersection i) {
         this.nextIntersection = i;
     }
 
+    /**
+     * get StartPoint for Specific Lane (Offset)
+     * @param laneId
+     * @return Point
+     */
     public Point getLaneStart(int laneId) {
         return getLanePoint(this.start,laneId);
     }
 
+    /**
+     * get endPoint for specific Lane (offset)
+     * @param laneId
+     * @return Point
+     */
     public Point getLaneEnd(int laneId) {
         return getLanePoint(this.end,laneId);
     }
 
+    /**
+     * get MaxSpeed on this Streed
+     * @return MaxSpeed
+     */
     public int getMaxSpeed() {
         return this.speedlimit;
     }
 
-    private Point getLanePoint(Point p, int laneId) {
-       Vector2d tmpV = new Vector2d(this.orthogonal);
-        tmpV.normalize();
-        tmpV.scale((laneId)*LANE_WIDTH);
-        return new Point((int)(p.x+tmpV.x),(int)(p.y+tmpV.y));
-    }
-
+    /**
+     * toString() Method
+     * @return
+     */
     public String toString() {
         return "Street " + this.id + " S("+this.start.getX()+"/"+this.start.getY()+") E("+this.end.getX()+"/"+this.end.getY()+")";
     }
 
+    /**
+     * get a list of all Vehicles on this street
+     * @return Vehicles[]
+     */
     public ArrayList<Vehicle> getVehicles() {
         ArrayList<Vehicle>  allvehicles = new ArrayList<Vehicle>();
         for(ArrayList<Vehicle> av: this.vehiclesOnStreet) {
@@ -210,5 +293,10 @@ public class Street implements Comparable<Street>{
         return allvehicles;
     }
 
-
+    private Point getLanePoint(Point p, int laneId) {
+       Vector2d tmpV = new Vector2d(this.orthogonal);
+        tmpV.normalize();
+        tmpV.scale((laneId)*LANE_WIDTH);
+        return new Point((int)(p.x+tmpV.x),(int)(p.y+tmpV.y));
+    }
 }

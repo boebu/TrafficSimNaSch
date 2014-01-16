@@ -9,10 +9,11 @@ import java.util.*;
  * User: boebu
  * Date: 11/18/13
  * Time: 11:49 PM
- * To change this template use File | Settings | File Templates.
+ * Intersection Model
  */
 public class Intersection {
 
+    // init instance variables
     private static final int RADIUS = 16;
     private Point position;
     private Hashtable<Intersection, Street> outgoingStreets;
@@ -35,15 +36,28 @@ public class Intersection {
         this.phase = 0;
     }
 
+    /**
+     * get the current iteratePhaseCounter
+     * @return iteratePhaseCounter
+     */
     public int getInteratePhasesTick() {
         return interatePhasesTick;
     }
 
+    /**
+     * sets the interatephasecounter
+     * @param interatePhasesTick
+     */
     public void setInteratePhasesTick(int interatePhasesTick) {
         this.interatePhasesTick = interatePhasesTick;
     }
 
+    /**
+     *  interate phase
+     *  @param
+     */
     public void iteratePhase() {
+        // iterate trough StreetPhases based on tick rate
        if(this.ticks >= this.interatePhasesTick || this.delayed) {
            // need to check if intersection is empty
            if(isIntersectionEmpty()) {
@@ -55,21 +69,17 @@ public class Intersection {
                this.ticks = 0;
                this.delayed = false;
            } else {
-               System.out.println("VEHICLES ON LANE");
-               for(IntersectionStreet is: StreetPhases) {
-                   for(Vehicle v: is.getVehicles()) {
-                       System.out.println(v.getPosition());
-                   }
-               }
                this.delayed = true;
            }
        } else {
            this.ticks++;
        }
-
-       System.out.println("PHASE " + this.phase);
     }
 
+    /**
+     *   initializes Routing on Intersection
+     *   @param
+     */
     public void initRouting() {
         this.routing = new Hashtable<Street, Hashtable<Direction, Street>>();
         for(Street incoming:incomingStreets.values()) {
@@ -79,6 +89,81 @@ public class Intersection {
         initFlowPhases();
     }
 
+    /**
+     * gets all incoming streets
+     * @return incomingStreets[]
+     */
+    public Collection<Street> getIncomingStreets() {
+        return this.incomingStreets.values();
+    }
+
+    /**
+     * gets the route based on incoming street and direction
+     * @param incoming
+     * @param dir
+     * @return Street
+     */
+    public Street getRoute(Street incoming, Direction dir) {
+        return this.routing.get(incoming).get(dir);
+    }
+
+    /**
+     * gets the Intersection Position
+     * @return position
+     */
+    public Point getPosition() {
+        return this.position;
+    }
+
+    /**
+     * Adds an outgoing street
+     * @param intersection
+     * @param street
+     */
+    public void addOutgoingStreet(Intersection i, Street s) {
+        this.outgoingStreets.put(i,s);
+        this.sortedOutgoingStreets.add(s);
+        s.setNextIntersection(i);
+        i.addIncomingStreet(this,s);
+    }
+
+    /**
+     * helper method to allow a vehicle to choose a new direction based on some kind of randomness
+     * @param incoming
+     * @return Direction
+     */
+    public Direction getNewDirection(Street incoming) {
+        Set<Direction> directions = this.routing.get(incoming).keySet();
+        return (Direction)directions.toArray()[this.random.nextInt(directions.size())];
+    }
+
+    /**
+     * get the Intersection street
+     * @param from
+     * @param to
+     * @return Street
+     */
+    public Street getIntersectionStreet(Street from, Street to) {
+        for(IntersectionStreet is: this.StreetPhases) {
+            if(is.getStart() == from.getEnd() && is.getEnd() == to.getStart() && is.getPhase() == this.phase) {
+                return is;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * add an incoming street, this method should only be called from another Intersection Object
+     * @param i
+     * @param s
+     */
+    protected void addIncomingStreet(Intersection i, Street s) {
+        this.incomingStreets.put(i,s);
+    }
+
+    /**
+     * calculates a non conflicting flowphase
+     */
     private void initFlowPhases() {
         int tmpphase = 0;
         for(Street incoming:this.incomingStreets.values()) {
@@ -102,24 +187,20 @@ public class Intersection {
             }
         }
         this.maxPhase = tmpphase-1;
-        for(IntersectionStreet x: StreetPhases) {
-            System.out.println(x.getId() + " " + x.getStart() + " " + x.getEnd() + " " +  x.getPhase());
-        }
     }
 
-    public Collection<Street> getIncomingStreets() {
-        return this.incomingStreets.values();
-    }
-
+    /**
+     * helper Method for flowphase generation
+     * @param incoming
+     * @return  Hashtable<Direction,Street>
+     */
     private Hashtable<Direction, Street> getOutgoingStreetDirection(Street incoming) {
         // create orthogonal Vector to incoming street Direction
         Vector2d orth = new Vector2d(-incoming.getDirection().y,incoming.getDirection().x);
         Hashtable<Direction, Street> routes = new Hashtable<Direction, Street>();
         Hashtable<Double, Street> httmp = new Hashtable<Double, Street>();
-        //Double[] angles = new Double[3];
         ArrayList<Double> angles = new ArrayList<Double>();
         for(Street outgoing:outgoingStreets.values()) {
-
             Vector2d tmpv = new Vector2d(outgoing.getDirection());
             tmpv.add(incoming.getDirection());
             Double angle = Math.toDegrees(orth.angle(tmpv));
@@ -129,7 +210,6 @@ public class Intersection {
             }
         }
         Collections.sort(angles);
-
         routes.put(Direction.RIGHT,httmp.get(angles.get(0)));
         if(angles.size() >= 2) {
             routes.put(Direction.STRAIGHT, httmp.get(angles.get(1)));
@@ -137,44 +217,15 @@ public class Intersection {
         if(angles.size() == 3) {
             routes.put(Direction.LEFT,httmp.get(angles.get(2)));
         }
-
-
         return routes;
     }
 
-    public Street getRoute(Street incoming, Direction dir) {
-        return this.routing.get(incoming).get(dir);
-    }
-
-    public Point getPosition() {
-        return this.position;
-    }
-
-    public void addOutgoingStreet(Intersection i, Street s) {
-        this.outgoingStreets.put(i,s);
-        this.sortedOutgoingStreets.add(s);
-        s.setNextIntersection(i);
-        i.addIncomingStreet(this,s);
-    }
-
-    protected void addIncomingStreet(Intersection i, Street s) {
-       this.incomingStreets.put(i,s);
-    }
-
-    public Direction getNewDirection(Street incoming) {
-        Set<Direction> directions = this.routing.get(incoming).keySet();
-        return (Direction)directions.toArray()[this.random.nextInt(directions.size())];
-    }
-
-    public Street getIntersectionStreet(Street from, Street to) {
-         for(IntersectionStreet is: this.StreetPhases) {
-             if(is.getStart() == from.getEnd() && is.getEnd() == to.getStart() && is.getPhase() == this.phase) {
-                 return is;
-             }
-         }
-         return null;
-    }
-
+    /**
+     * helper method check if 2 streets are colliding or not
+     * @param s1
+     * @param s2
+     * @return true|false
+     */
     private static boolean checkStreetCollision(Street s1, Street s2) {
         Point a1 = s1.getStart();
         Point a2 = s1.getEnd();
@@ -190,6 +241,10 @@ public class Intersection {
         return ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1;
     }
 
+    /**
+     * helpermethod for iteratePhase, intersection needs to be empty for this
+     * @return
+     */
     private boolean isIntersectionEmpty() {
         for(IntersectionStreet is: StreetPhases) {
             if(is.getVehicles().size() != 0) {
