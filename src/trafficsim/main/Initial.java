@@ -17,6 +17,7 @@ import java.util.ArrayList;
  * Time: 12:50
  * To change this template use File | Settings | File Templates.
  */
+
 public class Initial {
 
     private static ArrayList<Intersection> intersections = new ArrayList<Intersection>();
@@ -24,6 +25,9 @@ public class Initial {
     private static ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
 
     public static void main(String[] args) throws InterruptedException {
+
+        int
+
 
         // INTERSECTIONS
 

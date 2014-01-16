@@ -167,7 +167,7 @@ public class Simulator {
         i6.initRouting();
     }
 
-    // SCENERY1, set value 2 in initScenery in Sim.java
+    // SCENERY2, set value 2 in initScenery in Sim.java
     private void scenery2(){
         // INTERSECTIONS
         Intersection i1 = new Intersection(200,100);
@@ -349,7 +349,7 @@ public class Simulator {
         i9.initRouting();
     }
 
-    // SCENERY1, set value 3 in initScenery in Sim.java
+    // SCENERY3, set value 3 in initScenery in Sim.java
     private void scenery3(){
         // INTERSECTIONS
         Intersection i1 = new Intersection(250,250);
