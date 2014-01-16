@@ -468,6 +468,16 @@ public class Simulator {
         return NEW_CAR_RATIO;
     }
 
+    public double getSlowDownRatio() {
+        return vehicles.get(0).getSlowDownRatio();
+    }
+
+    public void setSlowDownRatio(double p) {
+        for(Vehicle v:vehicles) {
+           v.setSlowDownRatio(p);
+        }
+    }
+
     public void setNewCarRatio(double n) {
         NEW_CAR_RATIO = n;
     }

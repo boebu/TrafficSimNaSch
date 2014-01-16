@@ -26,6 +26,7 @@ public class Vehicle {
     private boolean changeStreet = false;
     private boolean isInIntersection = false;
     private Intersection currentIntersection = null;
+    private double p = 0.15;
 
     //debug
     private String id;
@@ -34,10 +35,6 @@ public class Vehicle {
         this.id = id;
         this.currentStreet = s;
         this.laneId = laneid;
-
-
-
-
         this.direction = new Vector2d(s.getDirection());
         this.direction.normalize();
         this.speed = 3;
@@ -50,6 +47,13 @@ public class Vehicle {
         System.out.println("POS: " +this.position);
     }
 
+    public void setSlowDownRatio(double p) {
+        this.p = p;
+    }
+
+    public double getSlowDownRatio() {
+        return this.p;
+    }
 
     public Vector2d getDirection() {
         return this.direction;
@@ -81,8 +85,7 @@ public class Vehicle {
         accelerate();
 
         //  step 3 decelerate -1 with P factor = 0.15
-        double p = 0.15;
-        if(Math.random()<p) {
+        if(Math.random()<this.p) {
             decelerate(1);
         }
 

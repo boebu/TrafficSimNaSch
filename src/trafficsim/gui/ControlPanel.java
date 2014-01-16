@@ -40,7 +40,7 @@ public class ControlPanel {
         JButton reset = createButton("Reset", buttonPanel);
 
         // Panel (Time, Speed, Ratio, Iterate)
-        JPanel sviPanel = new JPanel(new GridLayout(4,2));
+        JPanel sviPanel = new JPanel(new GridLayout(5,2));
         createText("Elapsed Time:", sviPanel);
         elapsed.setText(new SimpleDateFormat("hh:mm:ss z").format(new Date(0)));
         sviPanel.add(elapsed);
@@ -51,6 +51,8 @@ public class ControlPanel {
         JSlider v = createSlider(0, 10, (int) (Sim.simulator.getNewCarRatio() * 10), 1, 0, true, sviPanel);
         createText("Intersection Iterate:", sviPanel);
         JSlider i = createSlider(5, 20, Sim.simulator.getNewIntersectionIterate(), 5, 1, true, sviPanel);
+        createText("SlowDownRatio [P]:", sviPanel);
+        JSlider p = createSlider(0, 100, 15, 20, 5, true, sviPanel);
 
         // Panel (Scenario Buttons)
         JPanel scenPanel = new JPanel(new GridLayout(1,3));
@@ -134,6 +136,14 @@ public class ControlPanel {
                 Sim.simulator.setNewIntersectionIterate(source.getValue());
             }
         });
+        p.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                Sim.simulator.setSlowDownRatio((double) source.getValue()/100);
+            }
+        });
+
 
     }
 
