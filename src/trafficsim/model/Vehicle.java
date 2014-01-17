@@ -40,11 +40,9 @@ public class Vehicle {
         this.speed = 3;
         //this.position = new Vector2d(s.getStart().getX(),s.getStart().getY());
 
-        System.out.println("LANEID:" + this.laneId);
-
         this.position = new Vector2d((s.getLaneStart(this.laneId)).getX(),s.getLaneStart(this.laneId).getY());
         s.enterStreet(this);
-        System.out.println("POS: " +this.position);
+
     }
 
     public void setSlowDownRatio(double p) {
@@ -205,9 +203,6 @@ public class Vehicle {
                 this.newPos.scale(this.speed*SPEEDMULTIPLIER);
                 this.newPos.add(this.position);
             }
-
-
-
         } else {
             double a = next.getPosition().x;
             maxEndPoint = new Vector2d(next.getPosition());
@@ -238,9 +233,6 @@ public class Vehicle {
         Vector2d x = new Vector2d(this.newPos);
         e.sub(s);
         x.sub(s);
-        if(x.length() > e.length()) {
-            System.out.println("FAIlHOCH10");
-        }
 
 
 
@@ -270,8 +262,6 @@ public class Vehicle {
         this.speed = this.speed - s;
         if(this.speed < 0) {
             this.speed = 0;
-        } else if(this.speed > 5) {
-            System.out.println("BRK");
         }
 
 
