@@ -176,7 +176,7 @@ public class ControlPanel {
     }
 
     // Load Scenario
-    public static void loadScenario(int scen){
+    private static void loadScenario(int scen){
         Sim.timer.restart();
         Sim.timer.stop();
         Sim.resetElapsedTime();

@@ -25,8 +25,8 @@ public class Simulator {
     private static double NEW_CAR_RATIO = 0.8;
     public StreetPanel streetPanel = new StreetPanel();
     public VehiclePanel vehiclePanel = new VehiclePanel();
-    SimulatorView view = new SimulatorView();
-    ControlPanel controlPanel = new ControlPanel();
+    private SimulatorView view = new SimulatorView();
+    private ControlPanel controlPanel = new ControlPanel();
 
     public void initScenery(int scenery) {
         switch(scenery) {
@@ -440,14 +440,8 @@ public class Simulator {
         controlPanel.init();
     }
 
-    private int x = 0;
-
     public double getNewCarRatio() {
         return NEW_CAR_RATIO;
-    }
-
-    public double getSlowDownRatio() {
-        return vehicles.get(0).getSlowDownRatio();
     }
 
     public void setSlowDownRatio(double p) {

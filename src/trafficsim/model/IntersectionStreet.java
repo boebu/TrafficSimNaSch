@@ -7,7 +7,7 @@ package trafficsim.model;
  * Time: 7:58 PM
  * To change this template use File | Settings | File Templates.
  */
-public class IntersectionStreet extends Street {
+class IntersectionStreet extends Street {
     //Instance variables
     private int phase;
 

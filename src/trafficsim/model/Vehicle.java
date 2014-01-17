@@ -266,10 +266,6 @@ public class Vehicle {
          }
     }
 
-    private void decelerateTo(int s) {
-        this.speed = s;
-    }
-
     private void decelerate(int s) {
         this.speed = this.speed - s;
         if(this.speed < 0) {

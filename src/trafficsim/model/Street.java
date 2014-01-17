@@ -26,7 +26,7 @@ public class Street implements Comparable<Street>{
     private Intersection nextIntersection;
     // debug
     private String id;
-    ArrayList<ArrayList<Vehicle>> vehiclesOnStreet;
+    private ArrayList<ArrayList<Vehicle>> vehiclesOnStreet;
 
     /**
      * creates a new Street Object

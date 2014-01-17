@@ -14,7 +14,6 @@ import java.util.*;
 public class Intersection {
 
     // init instance variables
-    private static final int RADIUS = 16;
     private Point position;
     private Hashtable<Intersection, Street> outgoingStreets;
     private Hashtable<Intersection, Street> incomingStreets;
@@ -117,8 +116,8 @@ public class Intersection {
 
     /**
      * Adds an outgoing street
-     * @param intersection
-     * @param street
+     * @param i
+     * @param s
      */
     public void addOutgoingStreet(Intersection i, Street s) {
         this.outgoingStreets.put(i,s);
@@ -157,7 +156,7 @@ public class Intersection {
      * @param i
      * @param s
      */
-    protected void addIncomingStreet(Intersection i, Street s) {
+    void addIncomingStreet(Intersection i, Street s) {
         this.incomingStreets.put(i,s);
     }
 
@@ -175,7 +174,6 @@ public class Intersection {
                         is.setPhase(tmpis.getPhase());
                         StreetPhases.add(is);
                         break;
-                    } else {
                     }
                 }
                 if(!StreetPhases.contains(is)) {
